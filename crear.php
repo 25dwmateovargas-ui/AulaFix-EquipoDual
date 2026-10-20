@@ -1,5 +1,5 @@
 <?php
-require 'conexion.php';
+require 'CONFIG/conexion.php';
 
 $titulo = trim($_POST['titulo'] ?? '');
 $descripcion = trim($_POST['descripcion'] ?? '');
