@@ -15,11 +15,13 @@ require 'CONFIG/conexion.php';
         <input type="text" id="titulo" name="titulo"><br>
         <label for="descripcion">Descripción</label>
         <input type="text" id="descripcion" name="descripcion">
+        <button type="submit">Enviar</button>
     </form>
 </body>
 </html>
 
 <?php
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
 $titulo = trim($_POST['titulo'] ?? '');
 $descripcion = trim($_POST['descripcion'] ?? '');
 
@@ -27,5 +29,12 @@ $stmt = $conexion->prepare(
 'INSERT INTO incidencias (titulo, descripcion, estado) VALUES (?, ?, "Nuevo")'
 );
 $stmt->bind_param('ss', $titulo, $descripcion);
-$stmt->execute();
+  if ($stmt->execute()) {
+            echo "<p style='color: green;'>¡Incidencia creada con éxito!</p>";
+        } else {
+            echo "<p style='color: red;'>Error al guardar en la base de datos.</p>";
+        }
+        
+        $stmt->close();
+    }
 ?>
