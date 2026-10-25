@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AulaFix — Listar tickets</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<div class="page">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#0b0c10" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#0b0c10" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </span>
+      AulaFix
+    </div>
+    <div class="topbar-right">
+      <a href="lobby.html" class="btn btn-ghost">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Volver atrás
+      </a>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="hero">
+      <h1>Listado de incidencias</h1>
+      <p>Consulta, filtra y actualiza el estado de cada ticket.</p>
+    </div>
+
+    <div class="ticket-toolbar">
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" id="ticket-search" placeholder="Buscar por título, ubicación o nº de ticket...">
+      </div>
+      <select id="ticket-filter" class="filter-select">
+        <option value="todos">Todos los estados</option>
+        <option value="abierto">Abierto</option>
+        <option value="en_progreso">En progreso</option>
+        <option value="cerrado">Cerrado</option>
+      </select>
+    </div>
+
+    <div class="listar-shell">
+      <ul class="ticket-list" id="ticket-list"></ul>
+      <div class="card detail-card" id="ticket-detail"></div>
+    </div>
+  </main>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
