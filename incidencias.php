@@ -9,42 +9,122 @@ if (!isset($_SESSION["usuario"])) {
 
 ?>
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AulaFix - Menú Principal</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AulaFix - Lobby</title>
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+    <link rel="stylesheet" href="frontend/css/style.css">
 </head>
+
 <body>
 
-    <h1>AulaFix</h1>
+<div class="bg-glow"></div>
 
-    <h2>Bienvenido <?php echo $_SESSION["usuario"]; ?></h2>
+<div class="page">
 
-    <hr>
+    <header class="topbar">
 
-    <a href="crear.php">
-        <button>Crear incidencia</button>
-    </a>
+        <div class="brand">
+            AulaFix
+        </div>
 
-    <br><br>
+        <div class="topbar-right">
 
-    <a href="listar.php">
-        <button>Listar incidencias</button>
-    </a>
+            <div class="user-pill">
 
-    <br><br>
+                <span class="user-avatar">
+                    <?php echo strtoupper(substr($_SESSION["usuario"], 0, 1)); ?>
+                </span>
 
-    <a href="buscar.php">
-        <button>Buscar y filtrar incidencias</button>
-    </a>
+                <?php echo htmlspecialchars($_SESSION["usuario"]); ?>
 
-    <br><br>
+            </div>
 
-    <a href="logout.php">
-        <button>Cerrar sesión</button>
-    </a>
+            <a href="logout.php" class="btn btn-ghost">
+                Cerrar sesión
+            </a>
+
+        </div>
+
+    </header>
+
+    <main class="content">
+
+        <div class="hero">
+
+            <h1>
+                ¡Bienvenido,
+                <?php echo htmlspecialchars($_SESSION["usuario"]); ?>! 👋
+            </h1>
+
+            <p>
+                ¿Qué quieres hacer hoy?
+            </p>
+
+        </div>
+
+        <div class="action-grid">
+
+            <a class="action-card" href="crear.php">
+                <h3>Crear ticket</h3>
+
+                <p>
+                    Registra una nueva incidencia indicando título,
+                    ubicación y descripción.
+                </p>
+            </a>
+
+            <a class="action-card" href="listar.php">
+                <h3>Listar tickets</h3>
+
+                <p>
+                    Consulta todas las incidencias,
+                    filtra por estado y actualiza su situación.
+                </p>
+            </a>
+
+            <a class="action-card" href="buscar.php">
+                <h3>Buscar ticket</h3>
+
+                <p>
+                    Localiza una incidencia concreta
+                    a partir de su número o título.
+                </p>
+            </a>
+
+        </div>
+
+        <div class="stats-row">
+
+            <div class="stat-pill">
+                <div class="n">2</div>
+                <div class="l">Abiertas</div>
+            </div>
+
+            <div class="stat-pill">
+                <div class="n">2</div>
+                <div class="l">En progreso</div>
+            </div>
+
+            <div class="stat-pill">
+                <div class="n">2</div>
+                <div class="l">Cerradas</div>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="frontend/js/script.js"></script>
 
 </body>
 </html>
