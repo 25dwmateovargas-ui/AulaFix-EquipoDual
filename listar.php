@@ -8,10 +8,29 @@ $stmt = $conexion->prepare("
 ");
 
 $stmt->execute();
+
 $resultado = $stmt->get_result();
 $totalTickets = $resultado->num_rows;
 ?>
+<?php
+$detalle = null;
 
+if (isset($_GET['id'])) {
+
+    $id = (int) $_GET['id'];
+
+    $stmtDetalle = $conexion->prepare("
+        SELECT id, titulo, descripcion, estado
+        FROM incidencias
+        WHERE id = ?
+    ");
+
+    $stmtDetalle->bind_param("i", $id);
+    $stmtDetalle->execute();
+
+    $detalle = $stmtDetalle->get_result()->fetch_assoc();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -82,26 +101,27 @@ $totalTickets = $resultado->num_rows;
 
                     <?php while ($incidencia = $resultado->fetch_assoc()): ?>
 
-                        <li class="ticket-item">
+                        <li>
+    <a href="listar.php?id=<?php echo $incidencia['id']; ?>"
+       class="ticket-item
+       <?php echo (isset($_GET['id']) && $_GET['id'] == $incidencia['id']) ? 'active' : ''; ?>">
 
-                            <div class="t-id">
-                                #<?php echo $incidencia['id']; ?>
-                            </div>
+        <div class="t-id">
+            #<?php echo $incidencia['id']; ?>
+        </div>
 
-                            <div class="t-info">
+        <div class="t-info">
+            <div class="t-title">
+                <?php echo htmlspecialchars($incidencia['titulo']); ?>
+            </div>
 
-                                <div class="t-title">
-                                    <?php echo htmlspecialchars($incidencia['titulo']); ?>
-                                </div>
+            <div class="t-loc">
+                Estado: <?php echo htmlspecialchars($incidencia['estado']); ?>
+            </div>
+        </div>
 
-                                <div class="t-loc">
-                                    Estado:
-                                    <?php echo htmlspecialchars($incidencia['estado']); ?>
-                                </div>
-
-                            </div>
-
-                        </li>
+    </a>
+</li>
 
                     <?php endwhile; ?>
 
@@ -117,45 +137,51 @@ $totalTickets = $resultado->num_rows;
 
             <div class="card detail-card">
 
-                <div class="detail-head">
+<?php if ($detalle): ?>
 
-                    <div>
-                        <h2>Información general</h2>
+    <div class="detail-head">
 
-                        <div class="detail-meta">
-                            <span>
-                                Total de incidencias:
-                                <?php echo $totalTickets; ?>
-                            </span>
-                        </div>
-                    </div>
+        <div>
+            <h2>
+                <?php echo htmlspecialchars($detalle['titulo']); ?>
+            </h2>
 
-                    <span class="badge badge-open">
-                        Activo
-                    </span>
-
-                </div>
-
-                <div class="detail-body">
-
-                    <p>
-                        Actualmente se muestran todas las incidencias
-                        almacenadas en la base de datos de AulaFix.
-                    </p>
-
-                    <p>
-                        En futuras versiones podrás pulsar sobre cada
-                        incidencia para ver toda su información detallada.
-                    </p>
-
-                    <p>
-                        Utiliza el menú superior para volver al panel principal
-                        y continuar gestionando incidencias.
-                    </p>
-
-                </div>
-
+            <div class="detail-meta">
+                <span>ID #<?php echo $detalle['id']; ?></span>
             </div>
+        </div>
+
+        <span class="badge badge-open">
+            <?php echo htmlspecialchars($detalle['estado']); ?>
+        </span>
+
+    </div>
+
+    <div class="detail-body">
+
+        <h3>Descripción</h3>
+
+        <p>
+            <?php echo nl2br(htmlspecialchars($detalle['descripcion'])); ?>
+        </p>
+
+    </div>
+
+<?php else: ?>
+
+    <div class="detail-head">
+        <h2>Información general</h2>
+    </div>
+
+    <div class="detail-body">
+        <p>
+            Selecciona una incidencia de la lista para ver sus detalles.
+        </p>
+    </div>
+
+<?php endif; ?>
+
+</div>
 
         </div>
 
