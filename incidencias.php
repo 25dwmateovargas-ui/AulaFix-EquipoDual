@@ -32,6 +32,7 @@ if (!isset($_SESSION["usuario"])) {
     <header class="topbar">
 
         <div class="brand">
+<<<<<<< HEAD
 
             <span class="brand-mark">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -63,6 +64,23 @@ if (!isset($_SESSION["usuario"])) {
 
             </div>
 
+=======
+            AulaFix
+        </div>
+
+        <div class="topbar-right">
+
+            <div class="user-pill">
+
+                <span class="user-avatar">
+                    <?php echo strtoupper(substr($_SESSION["usuario"], 0, 1)); ?>
+                </span>
+
+                <?php echo htmlspecialchars($_SESSION["usuario"]); ?>
+
+            </div>
+
+>>>>>>> 87d83da01d062d152a7fb1d1a336044744ec5f42
             <a href="logout.php" class="btn btn-ghost">
                 Cerrar sesión
             </a>
@@ -76,7 +94,12 @@ if (!isset($_SESSION["usuario"])) {
         <div class="hero">
 
             <h1>
+<<<<<<< HEAD
                 ¡Bienvenido, <?php echo htmlspecialchars($_SESSION["usuario"]); ?>! 👋
+=======
+                ¡Bienvenido,
+                <?php echo htmlspecialchars($_SESSION["usuario"]); ?>! 👋
+>>>>>>> 87d83da01d062d152a7fb1d1a336044744ec5f42
             </h1>
 
             <p>
@@ -88,6 +111,7 @@ if (!isset($_SESSION["usuario"])) {
         <div class="action-grid">
 
             <a class="action-card" href="crear.php">
+<<<<<<< HEAD
 
                 <span class="action-icon">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -98,12 +122,15 @@ if (!isset($_SESSION["usuario"])) {
                     </svg>
                 </span>
 
+=======
+>>>>>>> 87d83da01d062d152a7fb1d1a336044744ec5f42
                 <h3>Crear ticket</h3>
 
                 <p>
                     Registra una nueva incidencia indicando título,
                     ubicación y descripción.
                 </p>
+<<<<<<< HEAD
 
                 <span class="action-arrow">
                     Empezar
@@ -129,12 +156,18 @@ if (!isset($_SESSION["usuario"])) {
                     </svg>
                 </span>
 
+=======
+            </a>
+
+            <a class="action-card" href="listar.php">
+>>>>>>> 87d83da01d062d152a7fb1d1a336044744ec5f42
                 <h3>Listar tickets</h3>
 
                 <p>
                     Consulta todas las incidencias,
                     filtra por estado y actualiza su situación.
                 </p>
+<<<<<<< HEAD
 
                 <span class="action-arrow">
                     Ver listado
@@ -184,6 +217,17 @@ if (!isset($_SESSION["usuario"])) {
                     </svg>
                 </span>
 
+=======
+            </a>
+
+            <a class="action-card" href="buscar.php">
+                <h3>Buscar ticket</h3>
+
+                <p>
+                    Localiza una incidencia concreta
+                    a partir de su número o título.
+                </p>
+>>>>>>> 87d83da01d062d152a7fb1d1a336044744ec5f42
             </a>
 
         </div>
@@ -191,17 +235,29 @@ if (!isset($_SESSION["usuario"])) {
         <div class="stats-row">
 
             <div class="stat-pill">
+<<<<<<< HEAD
                 <div class="n" style="color:var(--danger)">2</div>
+=======
+                <div class="n">2</div>
+>>>>>>> 87d83da01d062d152a7fb1d1a336044744ec5f42
                 <div class="l">Abiertas</div>
             </div>
 
             <div class="stat-pill">
+<<<<<<< HEAD
                 <div class="n" style="color:var(--warning)">2</div>
+=======
+                <div class="n">2</div>
+>>>>>>> 87d83da01d062d152a7fb1d1a336044744ec5f42
                 <div class="l">En progreso</div>
             </div>
 
             <div class="stat-pill">
+<<<<<<< HEAD
                 <div class="n" style="color:var(--success)">2</div>
+=======
+                <div class="n">2</div>
+>>>>>>> 87d83da01d062d152a7fb1d1a336044744ec5f42
                 <div class="l">Cerradas</div>
             </div>
 

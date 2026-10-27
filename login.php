@@ -76,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="card login-card">
 
             <div class="login-head">
+<<<<<<< HEAD
 
                 <div class="brand" style="margin-bottom:10px;">
                     <span class="brand-mark">
@@ -121,6 +122,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         required>
                 </div>
 
+=======
+                <div class="brand" style="margin-bottom:10px;">
+                    AulaFix
+                </div>
+
+                <p>Gestión de incidencias del aula</p>
+            </div>
+
+            <?php if (!empty($error)): ?>
+                <p style="color:red;text-align:center;">
+                    <?php echo $error; ?>
+                </p>
+            <?php endif; ?>
+
+            <form method="POST">
+
+                <div class="field">
+                    <label for="nombre">Usuario</label>
+
+                    <input
+                        id="nombre"
+                        name="nombre"
+                        type="text"
+                        placeholder="Nombre de usuario"
+                        required>
+                </div>
+
+>>>>>>> 87d83da01d062d152a7fb1d1a336044744ec5f42
                 <div class="field">
                     <label for="contraseña">Contraseña</label>
 
@@ -132,6 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         required>
                 </div>
 
+<<<<<<< HEAD
                 <div class="row-between" style="margin-bottom:22px;">
 
                     <label class="checkbox-label">
@@ -165,14 +195,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     </svg>
 
+=======
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    style="width:100%;">
+
+                    Iniciar sesión
+
+>>>>>>> 87d83da01d062d152a7fb1d1a336044744ec5f42
                 </button>
 
             </form>
 
+<<<<<<< HEAD
             <p class="demo-hint">
                 Cuenta de demostración · alumno / 1234
             </p>
 
+=======
+>>>>>>> 87d83da01d062d152a7fb1d1a336044744ec5f42
         </div>
 
     </div>
