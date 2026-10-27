@@ -52,53 +52,84 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>AulaFix - Iniciar sesión</title>
-    <link rel="stylesheet" href="CSS/login.css">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+    <link rel="stylesheet" href="frontend/css/style.css">
 </head>
+
 <body>
 
-<div class="login-container">
+<div class="bg-glow"></div>
 
-    <h1>AulaFix</h1>
+<div class="page">
+    <div class="center-shell">
 
-    <p class="subtitulo">
-        Gestión de incidencias de aulas
-    </p>
+        <div class="card login-card">
 
-    <?php if (!empty($error)): ?>
-        <p style="color: red; text-align: center;">
-            <?php echo $error; ?>
-        </p>
-    <?php endif; ?>
+            <div class="login-head">
+                <div class="brand" style="margin-bottom:10px;">
+                    AulaFix
+                </div>
 
-    <form action="" method="POST">
+                <p>Gestión de incidencias del aula</p>
+            </div>
 
-        <input
-            type="text"
-            name="nombre"
-            placeholder="Nombre de usuario"
-            required
-        >
+            <?php if (!empty($error)): ?>
+                <p style="color:red;text-align:center;">
+                    <?php echo $error; ?>
+                </p>
+            <?php endif; ?>
 
-        <input
-            type="password"
-            name="contraseña"
-            placeholder="Contraseña"
-            required
-        >
+            <form method="POST">
 
-        <button type="submit">
-            Iniciar sesión
-        </button>
+                <div class="field">
+                    <label for="nombre">Usuario</label>
 
-    </form>
+                    <input
+                        id="nombre"
+                        name="nombre"
+                        type="text"
+                        placeholder="Nombre de usuario"
+                        required>
+                </div>
 
+                <div class="field">
+                    <label for="contraseña">Contraseña</label>
+
+                    <input
+                        id="contraseña"
+                        name="contraseña"
+                        type="password"
+                        placeholder="••••••••"
+                        required>
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    style="width:100%;">
+
+                    Iniciar sesión
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
 </div>
+
+<script src="frontend/js/script.js"></script>
 
 </body>
 </html>
