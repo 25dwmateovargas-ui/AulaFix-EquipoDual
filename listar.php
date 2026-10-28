@@ -58,7 +58,7 @@ if (
     exit;
 }
 $stmt = $conexion->prepare("
-    SELECT id, titulo, descripcion, estado
+    SELECT id, titulo, ubicacion, descripcion, estado
     FROM incidencias
     ORDER BY id DESC
 ");
@@ -76,7 +76,7 @@ if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
 
     $stmtDetalle = $conexion->prepare("
-        SELECT id, titulo, descripcion, estado
+        SELECT id, titulo, ubicacion, descripcion, estado
         FROM incidencias
         WHERE id = ?
     ");
@@ -172,7 +172,7 @@ if (isset($_GET['id'])) {
             </div>
 
             <div class="t-loc">
-                Estado: <?php echo htmlspecialchars($incidencia['estado']); ?>
+                📍 <?php echo htmlspecialchars($incidencia['ubicacion']); ?>
             </div>
         </div>
 
@@ -204,6 +204,7 @@ if (isset($_GET['id'])) {
 
             <div class="detail-meta">
                 <span>ID #<?php echo $detalle['id']; ?></span>
+                <span>📍 <?php echo htmlspecialchars($detalle['ubicacion']); ?></span>
             </div>
         </div>
 

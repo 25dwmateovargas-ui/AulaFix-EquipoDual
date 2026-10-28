@@ -17,8 +17,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = (int)$_GET['id'];
 
     $stmt = $conexion->prepare(
-        'SELECT id, titulo, descripcion, estado 
-         FROM incidencias 
+        'SELECT id, titulo, ubicacion, descripcion, estado
+         FROM incidencias
          WHERE id = ?'
     );
 
@@ -131,6 +131,11 @@ $badgeClass = match($estado) {
             <p>
                 <strong>Título:</strong>
                 <?= htmlspecialchars($incidencia['titulo']) ?>
+            </p>
+
+            <p>
+                <strong>Ubicación:</strong>
+                <?= htmlspecialchars($incidencia['ubicacion']) ?>
             </p>
         </div>
 

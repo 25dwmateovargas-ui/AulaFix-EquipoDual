@@ -15,16 +15,17 @@ $color = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $titulo = trim($_POST['titulo'] ?? '');
+    $ubicacion = trim($_POST['ubicacion'] ?? '');
     $descripcion = trim($_POST['descripcion'] ?? '');
 
-    if (!empty($titulo) && !empty($descripcion)) {
+    if (!empty($titulo) && !empty($ubicacion) && !empty($descripcion)) {
 
         $stmt = $conexion->prepare(
-            'INSERT INTO incidencias (titulo, descripcion, estado)
-             VALUES (?, ?, "Abierta")'
+            'INSERT INTO incidencias (titulo, ubicacion, descripcion, estado)
+             VALUES (?, ?, ?, "Abierta")'
         );
 
-        $stmt->bind_param('ss', $titulo, $descripcion);
+        $stmt->bind_param('sss', $titulo, $ubicacion, $descripcion);
 
         if ($stmt->execute()) {
             $mensaje = '¡Incidencia creada con éxito!';
@@ -37,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
 
     } else {
-        $mensaje = 'Todos los campos son obligatorios.';
+        $mensaje = 'Todos los campos son obligatorios (título, ubicación y descripción).';
         $color = '#ef4444';
     }
 }
@@ -152,9 +153,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <input
                         id="ubicacion"
+                        name="ubicacion"
                         type="text"
                         placeholder="Ej. Aula 2.1"
-                        disabled>
+                        required
+                        minlength="3"
+                        value="<?= htmlspecialchars($_POST['ubicacion'] ?? '') ?>">
+
+                    <div class="field-error">
+                        Indica una ubicación de al menos 3 caracteres.
+                    </div>
 
                 </div>
 
