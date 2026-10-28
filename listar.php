@@ -1,6 +1,54 @@
 <?php
 require 'CONFIG/conexion.php';
+if (
+    isset($_POST['accion']) &&
+    $_POST['accion'] === 'eliminar' &&
+    isset($_POST['id'])
+) {
+    $id = (int) $_POST['id'];
 
+    $stmtDelete = $conexion->prepare("
+        DELETE FROM incidencias
+        WHERE id = ?
+    ");
+
+    $stmtDelete->bind_param("i", $id);
+    $stmtDelete->execute();
+
+    header("Location: listar.php");
+    exit;
+}
+if (
+    isset($_POST['accion']) &&
+    $_POST['accion'] === 'cambiar_estado' &&
+    isset($_POST['id']) &&
+    isset($_POST['estado'])
+) {
+
+    $id = (int) $_POST['id'];
+    $estado = $_POST['estado'];
+
+    $estadosPermitidos = [
+        'Abierta',
+        'En proceso',
+        'Resuelta'
+    ];
+
+    if (in_array($estado, $estadosPermitidos)) {
+
+        $stmtEstado = $conexion->prepare("
+            UPDATE incidencias
+            SET estado = ?
+            WHERE id = ?
+        ");
+
+        $stmtEstado->bind_param("si", $estado, $id);
+        $stmtEstado->execute();
+    }
+
+    header("Location: listar.php?id=" . $id);
+    exit;
+}
 $stmt = $conexion->prepare("
     SELECT id, titulo, descripcion, estado
     FROM incidencias
@@ -151,9 +199,23 @@ if (isset($_GET['id'])) {
             </div>
         </div>
 
-        <span class="badge badge-open">
-            <?php echo htmlspecialchars($detalle['estado']); ?>
-        </span>
+        <?php
+
+$claseEstado = 'badge-abierta';
+
+if($detalle['estado'] == 'En proceso'){
+    $claseEstado = 'badge-progress';
+}
+
+if($detalle['estado'] == 'Resuelta'){
+    $claseEstado = 'badge-closed';
+}
+
+?>
+
+<span class="badge <?php echo $claseEstado; ?>">
+    <?php echo htmlspecialchars($detalle['estado']); ?>
+</span>
 
     </div>
 
@@ -166,6 +228,64 @@ if (isset($_GET['id'])) {
         </p>
 
     </div>
+    <div class="detail-footer">
+
+    <form method="post" class="estado-form">
+
+
+
+    <input type="hidden" name="accion" value="cambiar_estado">
+    <input type="hidden" name="id" value="<?php echo $detalle['id']; ?>">
+
+    <button
+    type="submit"
+    name="estado"
+    value="Abierta"
+    class="estado-btn abierta <?php echo $detalle['estado']=='Abierta' ? 'active' : ''; ?>">
+    Abierta
+</button>
+
+    <button
+        type="submit"
+        name="estado"
+        value="En proceso"
+        class="estado-btn proceso <?php echo $detalle['estado']=='En proceso' ? 'active' : ''; ?>">
+        En proceso
+    </button>
+
+    <button
+        type="submit"
+        name="estado"
+        value="Resuelta"
+        class="estado-btn resuelta <?php echo $detalle['estado']=='Resuelta' ? 'active' : ''; ?>">
+        Resuelta
+    </button>
+</form>
+
+    <form
+    method="post"
+    onsubmit="return confirm('¿Seguro que deseas eliminar esta incidencia?');">
+
+    <input
+        type="hidden"
+        name="accion"
+        value="eliminar">
+
+    <input
+        type="hidden"
+        name="id"
+        value="<?php echo $detalle['id']; ?>">
+
+    <button
+        type="submit"
+        class="delete-btn">
+        🗑 Eliminar incidencia
+    </button>
+
+</form>
+
+</div>
+
 
 <?php else: ?>
 
@@ -178,7 +298,6 @@ if (isset($_GET['id'])) {
             Selecciona una incidencia de la lista para ver sus detalles.
         </p>
     </div>
-
 <?php endif; ?>
 
 </div>
