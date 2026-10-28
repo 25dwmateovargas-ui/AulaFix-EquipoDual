@@ -9,26 +9,44 @@ if (!isset($_SESSION["usuario"])) {
 
 require 'CONFIG/conexion.php';
 
-$incidencia = null;
+$incidencias = [];
 $error = '';
+$busqueda = trim($_GET['q'] ?? '');
 
-if (isset($_GET['id']) && !empty($_GET['id'])) {
+if ($busqueda !== '') {
 
-    $id = (int)$_GET['id'];
+    if (ctype_digit($busqueda)) {
 
-    $stmt = $conexion->prepare(
-        'SELECT id, titulo, ubicacion, descripcion, estado
-         FROM incidencias
-         WHERE id = ?'
-    );
+        $id = (int) $busqueda;
 
-    $stmt->bind_param('i', $id);
+        $stmt = $conexion->prepare(
+            'SELECT id, titulo, ubicacion, descripcion, estado
+             FROM incidencias
+             WHERE id = ?'
+        );
+
+        $stmt->bind_param('i', $id);
+
+    } else {
+
+        $comodin = '%' . $busqueda . '%';
+
+        $stmt = $conexion->prepare(
+            'SELECT id, titulo, ubicacion, descripcion, estado
+             FROM incidencias
+             WHERE titulo LIKE ?
+             ORDER BY id DESC'
+        );
+
+        $stmt->bind_param('s', $comodin);
+    }
+
     $stmt->execute();
 
-    $incidencia = $stmt->get_result()->fetch_assoc();
+    $incidencias = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-    if (!$incidencia) {
-        $error = 'No se encontró ninguna incidencia.';
+    if (count($incidencias) === 0) {
+        $error = 'No se encontró ninguna incidencia para "' . htmlspecialchars($busqueda) . '".';
     }
 }
 ?>
@@ -76,7 +94,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
     <div class="search-hero">
         <h1>Buscar un ticket</h1>
-        <p>Introduce el número de ticket (ej. 1, 2, 3...)</p>
+        <p>Introduce el número de ticket o parte del título (ej. 3 o "proyector")</p>
 
         <form class="search-box" method="GET">
 
@@ -91,10 +109,10 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 </svg>
 
                 <input
-                    type="number"
-                    name="id"
-                    placeholder="Introduce el nº de ticket..."
-                    value="<?= htmlspecialchars($_GET['id'] ?? '') ?>"
+                    type="text"
+                    name="q"
+                    placeholder="Nº de ticket o título..."
+                    value="<?= htmlspecialchars($busqueda) ?>"
                 >
 
             </div>
@@ -108,7 +126,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
     <div id="result-area" class="result-area">
 
-        <?php if ($incidencia): ?>
+        <?php foreach ($incidencias as $incidencia): ?>
 
             <?php
 $estado = strtolower($incidencia['estado']);
@@ -116,12 +134,12 @@ $estado = strtolower($incidencia['estado']);
 $badgeClass = match($estado) {
     'abierta' => 'badge-open',
     'en proceso' => 'badge-progress',
-    'cerrada' => 'badge-closed',
+    'resuelta' => 'badge-closed',
     default => 'badge-open'
 };
 ?>
 
-<div class="result-card">
+<div class="result-card" style="margin-bottom:16px;">
 
     <div class="detail-head">
 
@@ -152,7 +170,9 @@ $badgeClass = match($estado) {
 
 </div>
 
-        <?php elseif ($error): ?>
+        <?php endforeach; ?>
+
+        <?php if ($error): ?>
 
             <div class="result-card">
                 <p><?= $error ?></p>

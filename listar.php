@@ -8,6 +8,13 @@ if (!isset($_SESSION["usuario"])) {
 }
 
 require 'CONFIG/conexion.php';
+
+$estadosPermitidos = [
+    'Abierta',
+    'En proceso',
+    'Resuelta'
+];
+
 if (
     isset($_POST['accion']) &&
     $_POST['accion'] === 'eliminar' &&
@@ -36,12 +43,6 @@ if (
     $id = (int) $_POST['id'];
     $estado = $_POST['estado'];
 
-    $estadosPermitidos = [
-        'Abierta',
-        'En proceso',
-        'Resuelta'
-    ];
-
     if (in_array($estado, $estadosPermitidos)) {
 
         $stmtEstado = $conexion->prepare("
@@ -57,16 +58,54 @@ if (
     header("Location: listar.php?id=" . $id);
     exit;
 }
-$stmt = $conexion->prepare("
-    SELECT id, titulo, ubicacion, descripcion, estado
-    FROM incidencias
-    ORDER BY id DESC
-");
+$busqueda = trim($_GET['q'] ?? '');
+$filtroEstado = $_GET['estado'] ?? '';
+
+if (!in_array($filtroEstado, $estadosPermitidos)) {
+    $filtroEstado = '';
+}
+
+$sql = "SELECT id, titulo, ubicacion, descripcion, estado FROM incidencias WHERE 1=1";
+$tipos = '';
+$parametros = [];
+
+if ($busqueda !== '') {
+    $sql .= " AND (titulo LIKE ? OR ubicacion LIKE ? OR descripcion LIKE ?)";
+    $comodin = '%' . $busqueda . '%';
+    $tipos .= 'sss';
+    $parametros[] = $comodin;
+    $parametros[] = $comodin;
+    $parametros[] = $comodin;
+}
+
+if ($filtroEstado !== '') {
+    $sql .= " AND estado = ?";
+    $tipos .= 's';
+    $parametros[] = $filtroEstado;
+}
+
+$sql .= " ORDER BY id DESC";
+
+$stmt = $conexion->prepare($sql);
+
+if ($tipos !== '') {
+    $referencias = [];
+    foreach ($parametros as $clave => $valor) {
+        $referencias[$clave] = &$parametros[$clave];
+    }
+    array_unshift($referencias, $tipos);
+    call_user_func_array([$stmt, 'bind_param'], $referencias);
+}
 
 $stmt->execute();
 
 $resultado = $stmt->get_result();
 $totalTickets = $resultado->num_rows;
+
+$queryFiltros = http_build_query(array_filter([
+    'q' => $busqueda,
+    'estado' => $filtroEstado,
+]));
 ?>
 <?php
 $detalle = null;
@@ -128,7 +167,7 @@ if (isset($_GET['id'])) {
             <p>Consulta todas las incidencias registradas en el sistema.</p>
         </div>
 
-        <div class="ticket-toolbar">
+        <form class="ticket-toolbar" method="GET">
 
             <div class="search-wrap">
 
@@ -139,15 +178,27 @@ if (isset($_GET['id'])) {
 
                 <input
                     type="text"
-                    placeholder="Búsqueda (próximamente)"
-                    disabled>
+                    name="q"
+                    placeholder="Buscar por título, ubicación o descripción..."
+                    value="<?php echo htmlspecialchars($busqueda); ?>">
             </div>
 
-            <select class="filter-select" disabled>
-                <option>Todos los estados</option>
+            <select class="filter-select" name="estado" onchange="this.form.submit()">
+                <option value="" <?php echo $filtroEstado === '' ? 'selected' : ''; ?>>Todos los estados</option>
+                <?php foreach ($estadosPermitidos as $estadoOpcion): ?>
+                    <option value="<?php echo htmlspecialchars($estadoOpcion); ?>" <?php echo $filtroEstado === $estadoOpcion ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($estadoOpcion); ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
 
-        </div>
+            <button type="submit" class="btn btn-secondary">Buscar</button>
+
+            <?php if ($busqueda !== '' || $filtroEstado !== ''): ?>
+                <a href="listar.php" class="btn btn-ghost">Limpiar</a>
+            <?php endif; ?>
+
+        </form>
 
         <div class="listar-shell">
 
@@ -158,7 +209,7 @@ if (isset($_GET['id'])) {
                     <?php while ($incidencia = $resultado->fetch_assoc()): ?>
 
                         <li>
-    <a href="listar.php?id=<?php echo $incidencia['id']; ?>"
+    <a href="listar.php?id=<?php echo $incidencia['id']; ?><?php echo $queryFiltros !== '' ? '&' . $queryFiltros : ''; ?>"
        class="ticket-item
        <?php echo (isset($_GET['id']) && $_GET['id'] == $incidencia['id']) ? 'active' : ''; ?>">
 
@@ -184,7 +235,11 @@ if (isset($_GET['id'])) {
                 <?php else: ?>
 
                     <li class="empty-list">
-                        No hay incidencias registradas.
+                        <?php if ($busqueda !== '' || $filtroEstado !== ''): ?>
+                            No hay incidencias que coincidan con la búsqueda.
+                        <?php else: ?>
+                            No hay incidencias registradas.
+                        <?php endif; ?>
                     </li>
 
                 <?php endif; ?>
