@@ -58,6 +58,24 @@ if (
     header("Location: listar.php?id=" . $id);
     exit;
 }
+if (isset($_GET['densidad']) && in_array($_GET['densidad'], ['comoda', 'compacta'])) {
+
+    setcookie('densidad', $_GET['densidad'], time() + (60 * 60 * 24 * 365), '/');
+
+    $paramsSinDensidad = $_GET;
+    unset($paramsSinDensidad['densidad']);
+
+    $destino = 'listar.php';
+    if (!empty($paramsSinDensidad)) {
+        $destino .= '?' . http_build_query($paramsSinDensidad);
+    }
+
+    header("Location: $destino");
+    exit;
+}
+
+$densidad = ($_COOKIE['densidad'] ?? 'comoda') === 'compacta' ? 'compacta' : 'comoda';
+
 $busqueda = trim($_GET['q'] ?? '');
 $filtroEstado = $_GET['estado'] ?? '';
 
@@ -199,11 +217,19 @@ if (isset($_GET['id'])) {
                 <a href="listar.php" class="btn btn-ghost">Limpiar</a>
             <?php endif; ?>
 
+            <?php
+            $otraDensidad = $densidad === 'compacta' ? 'comoda' : 'compacta';
+            $queryDensidad = http_build_query(array_merge($_GET, ['densidad' => $otraDensidad]));
+            ?>
+            <a href="listar.php?<?php echo $queryDensidad; ?>" class="btn btn-ghost">
+                Vista: <?php echo $densidad === 'compacta' ? 'Compacta' : 'Cómoda'; ?>
+            </a>
+
         </form>
 
         <div class="listar-shell">
 
-            <ul class="ticket-list" id="lista-tickets">
+            <ul class="ticket-list <?php echo $densidad === 'compacta' ? 'densidad-compacta' : ''; ?>" id="lista-tickets">
 
                 <?php if ($resultado->num_rows > 0): ?>
 
