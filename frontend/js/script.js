@@ -48,7 +48,46 @@ function initContadorDescripcion() {
   actualizar();
 }
 
+/* ---------- Página: Crear ticket — validación (mismas reglas que PHP) ---------- */
+function initValidacionCrear() {
+  const form = document.getElementById('crear-form');
+  if (!form) return;
+
+  const reglas = {
+    titulo: 3,
+    ubicacion: 3,
+    descripcion: 10,
+  };
+
+  function validarCampo(id) {
+    const campo = document.getElementById(id);
+    if (!campo) return true;
+
+    const valido = campo.value.trim().length >= reglas[id];
+    campo.closest('.field').classList.toggle('has-error', !valido);
+    return valido;
+  }
+
+  Object.keys(reglas).forEach((id) => {
+    const campo = document.getElementById(id);
+    if (campo) {
+      campo.addEventListener('input', () => validarCampo(id));
+    }
+  });
+
+  form.addEventListener('submit', (e) => {
+    const todoValido = Object.keys(reglas)
+      .map(validarCampo)
+      .every(Boolean);
+
+    if (!todoValido) {
+      e.preventDefault();
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initFiltradoInmediato();
   initContadorDescripcion();
+  initValidacionCrear();
 });

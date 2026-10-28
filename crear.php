@@ -12,13 +12,34 @@ require 'CONFIG/conexion.php';
 $mensaje = '';
 $color = '';
 
+$tituloInvalido = false;
+$ubicacionInvalida = false;
+$descripcionInvalida = false;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $titulo = trim($_POST['titulo'] ?? '');
     $ubicacion = trim($_POST['ubicacion'] ?? '');
     $descripcion = trim($_POST['descripcion'] ?? '');
 
-    if (!empty($titulo) && !empty($ubicacion) && !empty($descripcion)) {
+    $errores = [];
+
+    if (mb_strlen($titulo) < 3) {
+        $errores[] = 'el título debe tener al menos 3 caracteres';
+        $tituloInvalido = true;
+    }
+
+    if (mb_strlen($ubicacion) < 3) {
+        $errores[] = 'la ubicación debe tener al menos 3 caracteres';
+        $ubicacionInvalida = true;
+    }
+
+    if (mb_strlen($descripcion) < 10) {
+        $errores[] = 'la descripción debe tener al menos 10 caracteres';
+        $descripcionInvalida = true;
+    }
+
+    if (empty($errores)) {
 
         $stmt = $conexion->prepare(
             'INSERT INTO incidencias (titulo, ubicacion, descripcion, estado)
@@ -38,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
 
     } else {
-        $mensaje = 'Todos los campos son obligatorios (título, ubicación y descripción).';
+        $mensaje = 'Revisa estos campos: ' . ucfirst(implode('; ', $errores)) . '.';
         $color = '#ef4444';
     }
 }
@@ -128,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <form method="POST" id="crear-form">
 
-                <div class="field">
+                <div class="field <?= $tituloInvalido ? 'has-error' : '' ?>">
 
                     <label for="titulo">Título</label>
 
@@ -147,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 </div>
 
-                <div class="field">
+                <div class="field <?= $ubicacionInvalida ? 'has-error' : '' ?>">
 
                     <label for="ubicacion">Ubicación</label>
 
@@ -176,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 </div>
 
-                <div class="field">
+                <div class="field <?= $descripcionInvalida ? 'has-error' : '' ?>">
 
                     <label for="descripcion">Descripción</label>
 
