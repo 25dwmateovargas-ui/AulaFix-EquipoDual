@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php endif; ?>
 
-            <form method="POST">
+            <form method="POST" id="crear-form">
 
                 <div class="field">
 
@@ -191,11 +191,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         Describe la incidencia con al menos 10 caracteres.
                     </div>
 
+                    <div id="contador-descripcion" style="margin-top:6px;font-size:12.5px;color:var(--text-dim);">
+                        0 caracteres
+                    </div>
+
                 </div>
 
                 <div style="display:flex;gap:10px;margin-top:10px;">
 
-                    <a href="lobby.php"
+                    <a href="incidencias.php"
                        class="btn btn-secondary"
                        style="flex:1;">
                         Cancelar
@@ -218,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </div>
 
-<script src="js/script.js"></script>
+<script src="frontend/js/script.js"></script>
 
 </body>
 </html>

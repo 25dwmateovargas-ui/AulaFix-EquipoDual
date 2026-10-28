@@ -179,6 +179,7 @@ if (isset($_GET['id'])) {
                 <input
                     type="text"
                     name="q"
+                    id="buscador-texto"
                     placeholder="Buscar por título, ubicación o descripción..."
                     value="<?php echo htmlspecialchars($busqueda); ?>">
             </div>
@@ -202,7 +203,7 @@ if (isset($_GET['id'])) {
 
         <div class="listar-shell">
 
-            <ul class="ticket-list">
+            <ul class="ticket-list" id="lista-tickets">
 
                 <?php if ($resultado->num_rows > 0): ?>
 
@@ -371,6 +372,8 @@ if($detalle['estado'] == 'Resuelta'){
     </main>
 
 </div>
+
+<script src="frontend/js/script.js"></script>
 
 </body>
 </html>
