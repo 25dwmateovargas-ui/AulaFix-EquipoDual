@@ -624,3 +624,185 @@ a { color: inherit; text-decoration: none; }
 .ticket-item.active {
     background: var(--accent-soft);
 }
+.status-select{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background:
+        linear-gradient(145deg, var(--surface-2), var(--surface-3));
+    color: var(--text);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    padding: 12px 45px 12px 15px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff5a3c' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 7.5L10 12l4.5-4.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+}
+
+.status-select:hover{
+    border-color: var(--accent);
+}
+
+.status-select:focus{
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255,90,60,.15);
+}
+
+.status-select:focus{
+    border-color:var(--accent);
+}
+
+.btn-danger{
+    background: #dc2626;
+    color:white;
+    border:none;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.2s;
+}
+
+.btn-danger:hover{
+    background:#b91c1c;
+    transform:translateY(-1px);
+}
+
+.detail-footer form{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.detail-footer{
+    margin-top:25px;
+    padding-top:20px;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:15px;
+}
+.badge-nueva{
+    background: rgba(59,130,246,.15);
+    color:#60a5fa;
+}
+.estado-form{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+.badge-abierta{
+    background: rgba(59,130,246,.15);
+    color:#60a5fa;
+}
+
+.estado-form{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+
+.estado-btn{
+    border:none;
+    border-radius:12px;
+    padding:12px 18px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all .2s ease;
+    color:white;
+    min-width:110px;
+}
+
+.estado-btn:hover{
+    transform:translateY(-2px);
+}
+
+.estado-btn.active{
+    transform:scale(1.05);
+    outline:2px solid rgba(255,255,255,.5);
+    box-shadow:0 0 20px rgba(255,255,255,.15);
+}
+
+.estado-btn.abierta{
+    background:#3b82f6;
+}
+
+.estado-btn.abierta:hover{
+    background:#2563eb;
+}
+
+.estado-btn.proceso{
+    background:#eab308;
+    color:#111827;
+}
+
+.estado-btn.proceso:hover{
+    background:#ca8a04;
+}
+
+.estado-btn.resuelta{
+    background:#22c55e;
+}
+
+.estado-btn.resuelta:hover{
+    background:#16a34a;
+}
+
+.delete-btn{
+    padding:12px 20px;
+    border:none;
+    border-radius:12px;
+    background:#dc2626;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.delete-btn:hover{
+    background:#b91c1c;
+    transform:translateY(-2px);
+}
+
+.detail-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-top:25px;
+    padding-top:20px;
+    border-top:1px solid var(--border);
+}
+.estado-btn{
+    position: relative;
+    overflow: hidden;
+}
+
+.estado-btn.active{
+    transform: scale(1.05);
+    border: 2px solid rgba(255,255,255,.4);
+}
+
+.estado-btn.active::after{
+    content: "✓";
+    margin-left: 8px;
+}

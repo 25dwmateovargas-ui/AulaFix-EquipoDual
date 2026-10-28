@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $stmt = $conexion->prepare(
             'INSERT INTO incidencias (titulo, descripcion, estado)
-             VALUES (?, ?, "Nuevo")'
+             VALUES (?, ?, "Abierta")'
         );
 
         $stmt->bind_param('ss', $titulo, $descripcion);
