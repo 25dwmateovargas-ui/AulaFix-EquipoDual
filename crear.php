@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'INSERT INTO incidencias (titulo, descripcion, estado)
              VALUES (?, ?, "Nuevo")'
         );
-
+        
         $stmt->bind_param('ss', $titulo, $descripcion);
 
         if ($stmt->execute()) {
