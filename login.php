@@ -1,17 +1,16 @@
 <?php
+require_once("CONFIG/conexion.php");
 
 session_start();
 
-if (isset($_SESSION["usuario"])) {
+if (isset($_SESSION["usuarios"])) {
     header("Location: incidencias.php");
     exit();
 }
 
-require_once("CONFIG/conexion.php");
-
 $error = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $nombre = $_POST["nombre"];
     $contraseña = $_POST["contraseña"];
@@ -36,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (mysqli_num_rows($resultado) === 1) {
 
-        $_SESSION["usuario"] = $nombre;
+        $_SESSION["usuarios"] = $nombre;
 
         header("Location: incidencias.php");
         exit();
