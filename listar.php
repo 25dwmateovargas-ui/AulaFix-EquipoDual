@@ -7,7 +7,7 @@ if (!isset($_SESSION["usuario"])) {
     exit();
 }
 
-require 'CONFIG/conexion.php';
+require_once __DIR__ . "/CONFIG/conexion.php";
 
 $estadosPermitidos = [
     'Abierta',
@@ -398,7 +398,7 @@ if($detalle['estado'] == 'Resuelta'){
         </div>
 
     </main>
-
+<?php include 'includes/footer.php'; ?>
 </div>
 
 <script src="frontend/js/script.js"></script>

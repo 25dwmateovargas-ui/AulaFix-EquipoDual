@@ -7,7 +7,7 @@ if (!isset($_SESSION["usuario"])) {
     exit();
 }
 
-require 'CONFIG/conexion.php';
+require_once __DIR__ . "/CONFIG/conexion.php";
 
 $mensaje = '';
 $color = '';
@@ -219,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
 </div>
-
+<?php include 'includes/footer.php'; ?>
 <script src="frontend/js/script.js"></script>
 
 </body>

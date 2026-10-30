@@ -7,7 +7,7 @@ if (isset($_SESSION["usuario"])) {
     exit();
 }
 
-require_once("CONFIG/conexion.php");
+require_once __DIR__ . "/CONFIG/conexion.php";
 
 $error = "";
 
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $resultado = mysqli_stmt_get_result($stmt);
 
-    if (mysqli_num_rows($resultado) === 1) {
+    if (mysqli_num_rows($resultado) >= 1) {
 
         $_SESSION["usuario"] = $nombre;
 
@@ -177,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </div>
 </div>
-
+<?php include 'includes/footer.php'; ?>
 <script src="frontend/js/script.js"></script>
 
 </body>

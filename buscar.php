@@ -7,7 +7,7 @@ if (!isset($_SESSION["usuario"])) {
     exit();
 }
 
-require 'CONFIG/conexion.php';
+require_once __DIR__ . "/CONFIG/conexion.php";
 
 $incidencias = [];
 $error = '';
@@ -179,7 +179,7 @@ $badgeClass = match($estado) {
     </div>
 
 </main>
-
+<?php include 'includes/footer.php'; ?>
 </div>
 
 </body>
