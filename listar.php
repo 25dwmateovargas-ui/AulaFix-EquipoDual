@@ -1,5 +1,20 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION["usuario"])) {
+    header("Location: login.php");
+    exit();
+}
+
 require 'CONFIG/conexion.php';
+
+$estadosPermitidos = [
+    'Abierta',
+    'En proceso',
+    'Resuelta'
+];
+
 if (
     isset($_POST['accion']) &&
     $_POST['accion'] === 'eliminar' &&
@@ -28,12 +43,6 @@ if (
     $id = (int) $_POST['id'];
     $estado = $_POST['estado'];
 
-    $estadosPermitidos = [
-        'Abierta',
-        'En proceso',
-        'Resuelta'
-    ];
-
     if (in_array($estado, $estadosPermitidos)) {
 
         $stmtEstado = $conexion->prepare("
@@ -49,16 +58,72 @@ if (
     header("Location: listar.php?id=" . $id);
     exit;
 }
-$stmt = $conexion->prepare("
-    SELECT id, titulo, descripcion, estado
-    FROM incidencias
-    ORDER BY id DESC
-");
+if (isset($_GET['densidad']) && in_array($_GET['densidad'], ['comoda', 'compacta'])) {
+
+    setcookie('densidad', $_GET['densidad'], time() + (60 * 60 * 24 * 365), '/');
+
+    $paramsSinDensidad = $_GET;
+    unset($paramsSinDensidad['densidad']);
+
+    $destino = 'listar.php';
+    if (!empty($paramsSinDensidad)) {
+        $destino .= '?' . http_build_query($paramsSinDensidad);
+    }
+
+    header("Location: $destino");
+    exit;
+}
+
+$densidad = ($_COOKIE['densidad'] ?? 'comoda') === 'compacta' ? 'compacta' : 'comoda';
+
+$busqueda = trim($_GET['q'] ?? '');
+$filtroEstado = $_GET['estado'] ?? '';
+
+if (!in_array($filtroEstado, $estadosPermitidos)) {
+    $filtroEstado = '';
+}
+
+$sql = "SELECT id, titulo,descripcion, estado FROM incidencias WHERE 1=1";
+$tipos = '';
+$parametros = [];
+
+if ($busqueda !== '') {
+    $sql .= " AND (titulo LIKE ? OR descripcion LIKE ?)";
+    $comodin = '%' . $busqueda . '%';
+    $tipos .= 'sss';
+    $parametros[] = $comodin;
+    $parametros[] = $comodin;
+    $parametros[] = $comodin;
+}
+
+if ($filtroEstado !== '') {
+    $sql .= " AND estado = ?";
+    $tipos .= 's';
+    $parametros[] = $filtroEstado;
+}
+
+$sql .= " ORDER BY id DESC";
+
+$stmt = $conexion->prepare($sql);
+
+if ($tipos !== '') {
+    $referencias = [];
+    foreach ($parametros as $clave => $valor) {
+        $referencias[$clave] = &$parametros[$clave];
+    }
+    array_unshift($referencias, $tipos);
+    call_user_func_array([$stmt, 'bind_param'], $referencias);
+}
 
 $stmt->execute();
 
 $resultado = $stmt->get_result();
 $totalTickets = $resultado->num_rows;
+
+$queryFiltros = http_build_query(array_filter([
+    'q' => $busqueda,
+    'estado' => $filtroEstado,
+]));
 ?>
 <?php
 $detalle = null;
@@ -120,7 +185,7 @@ if (isset($_GET['id'])) {
             <p>Consulta todas las incidencias registradas en el sistema.</p>
         </div>
 
-        <div class="ticket-toolbar">
+        <form class="ticket-toolbar" method="GET">
 
             <div class="search-wrap">
 
@@ -131,26 +196,47 @@ if (isset($_GET['id'])) {
 
                 <input
                     type="text"
-                    placeholder="Búsqueda (próximamente)"
-                    disabled>
+                    name="q"
+                    id="buscador-texto"
+                    placeholder="Buscar por título, ubicación o descripción..."
+                    value="<?php echo htmlspecialchars($busqueda); ?>">
             </div>
 
-            <select class="filter-select" disabled>
-                <option>Todos los estados</option>
+            <select class="filter-select" name="estado" onchange="this.form.submit()">
+                <option value="" <?php echo $filtroEstado === '' ? 'selected' : ''; ?>>Todos los estados</option>
+                <?php foreach ($estadosPermitidos as $estadoOpcion): ?>
+                    <option value="<?php echo htmlspecialchars($estadoOpcion); ?>" <?php echo $filtroEstado === $estadoOpcion ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($estadoOpcion); ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
 
-        </div>
+            <button type="submit" class="btn btn-secondary">Buscar</button>
+
+            <?php if ($busqueda !== '' || $filtroEstado !== ''): ?>
+                <a href="listar.php" class="btn btn-ghost">Limpiar</a>
+            <?php endif; ?>
+
+            <?php
+            $otraDensidad = $densidad === 'compacta' ? 'comoda' : 'compacta';
+            $queryDensidad = http_build_query(array_merge($_GET, ['densidad' => $otraDensidad]));
+            ?>
+            <a href="listar.php?<?php echo $queryDensidad; ?>" class="btn btn-ghost">
+                Vista: <?php echo $densidad === 'compacta' ? 'Compacta' : 'Cómoda'; ?>
+            </a>
+
+        </form>
 
         <div class="listar-shell">
 
-            <ul class="ticket-list">
+            <ul class="ticket-list <?php echo $densidad === 'compacta' ? 'densidad-compacta' : ''; ?>" id="lista-tickets">
 
                 <?php if ($resultado->num_rows > 0): ?>
 
                     <?php while ($incidencia = $resultado->fetch_assoc()): ?>
 
                         <li>
-    <a href="listar.php?id=<?php echo $incidencia['id']; ?>"
+    <a href="listar.php?id=<?php echo $incidencia['id']; ?><?php echo $queryFiltros !== '' ? '&' . $queryFiltros : ''; ?>"
        class="ticket-item
        <?php echo (isset($_GET['id']) && $_GET['id'] == $incidencia['id']) ? 'active' : ''; ?>">
 
@@ -164,7 +250,6 @@ if (isset($_GET['id'])) {
             </div>
 
             <div class="t-loc">
-                Estado: <?php echo htmlspecialchars($incidencia['estado']); ?>
             </div>
         </div>
 
@@ -176,7 +261,11 @@ if (isset($_GET['id'])) {
                 <?php else: ?>
 
                     <li class="empty-list">
-                        No hay incidencias registradas.
+                        <?php if ($busqueda !== '' || $filtroEstado !== ''): ?>
+                            No hay incidencias que coincidan con la búsqueda.
+                        <?php else: ?>
+                            No hay incidencias registradas.
+                        <?php endif; ?>
                     </li>
 
                 <?php endif; ?>
@@ -196,6 +285,10 @@ if (isset($_GET['id'])) {
 
             <div class="detail-meta">
                 <span>ID #<?php echo $detalle['id']; ?></span>
+<<<<<<< HEAD
+=======
+                
+>>>>>>> 1975ce1f0f723dab51cc375fa7b7a3b1bec0e329
             </div>
         </div>
 
@@ -307,6 +400,8 @@ if($detalle['estado'] == 'Resuelta'){
     </main>
 
 </div>
+
+<script src="frontend/js/script.js"></script>
 
 </body>
 </html>

@@ -1,15 +1,40 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION["usuario"])) {
+    header("Location: login.php");
+    exit();
+}
+
 require 'CONFIG/conexion.php';
 
 $mensaje = '';
 $color = '';
+
+$tituloInvalido = false;
+$descripcionInvalida = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $titulo = trim($_POST['titulo'] ?? '');
     $descripcion = trim($_POST['descripcion'] ?? '');
 
-    if (!empty($titulo) && !empty($descripcion)) {
+    $errores = [];
+
+    if (mb_strlen($titulo) < 3) {
+        $errores[] = 'el título debe tener al menos 3 caracteres';
+        $tituloInvalido = true;
+    }
+
+    
+
+    if (mb_strlen($descripcion) < 10) {
+        $errores[] = 'la descripción debe tener al menos 10 caracteres';
+        $descripcionInvalida = true;
+    }
+
+    if (empty($errores)) {
 
         $stmt = $conexion->prepare(
             'INSERT INTO incidencias (titulo, descripcion, estado)
@@ -29,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
 
     } else {
-        $mensaje = 'Todos los campos son obligatorios.';
+        $mensaje = 'Revisa estos campos: ' . ucfirst(implode('; ', $errores)) . '.';
         $color = '#ef4444';
     }
 }
@@ -117,9 +142,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <?php endif; ?>
 
-            <form method="POST">
+            <form method="POST" id="crear-form">
 
-                <div class="field">
+                <div class="field <?= $tituloInvalido ? 'has-error' : '' ?>">
 
                     <label for="titulo">Título</label>
 
@@ -138,17 +163,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 </div>
 
-                <div class="field">
-
-                    <label for="ubicacion">Ubicación</label>
-
-                    <input
-                        id="ubicacion"
-                        type="text"
-                        placeholder="Ej. Aula 2.1"
-                        disabled>
-
-                </div>
 
                 <div class="field">
 
@@ -160,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 </div>
 
-                <div class="field">
+                <div class="field <?= $descripcionInvalida ? 'has-error' : '' ?>">
 
                     <label for="descripcion">Descripción</label>
 
@@ -175,11 +189,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         Describe la incidencia con al menos 10 caracteres.
                     </div>
 
+                    <div id="contador-descripcion" style="margin-top:6px;font-size:12.5px;color:var(--text-dim);">
+                        0 caracteres
+                    </div>
+
                 </div>
 
                 <div style="display:flex;gap:10px;margin-top:10px;">
 
-                    <a href="lobby.php"
+                    <a href="incidencias.php"
                        class="btn btn-secondary"
                        style="flex:1;">
                         Cancelar
@@ -202,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </div>
 
-<script src="js/script.js"></script>
+<script src="frontend/js/script.js"></script>
 
 </body>
 </html>
