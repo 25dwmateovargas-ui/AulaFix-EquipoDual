@@ -285,10 +285,6 @@ if (isset($_GET['id'])) {
 
             <div class="detail-meta">
                 <span>ID #<?php echo $detalle['id']; ?></span>
-<<<<<<< HEAD
-=======
-                
->>>>>>> 1975ce1f0f723dab51cc375fa7b7a3b1bec0e329
             </div>
         </div>
 
