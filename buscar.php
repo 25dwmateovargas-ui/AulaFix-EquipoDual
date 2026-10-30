@@ -20,7 +20,7 @@ if ($busqueda !== '') {
         $id = (int) $busqueda;
 
         $stmt = $conexion->prepare(
-            'SELECT id, titulo, ubicacion, descripcion, estado
+            'SELECT id, titulo, descripcion, estado
              FROM incidencias
              WHERE id = ?'
         );
@@ -32,7 +32,7 @@ if ($busqueda !== '') {
         $comodin = '%' . $busqueda . '%';
 
         $stmt = $conexion->prepare(
-            'SELECT id, titulo, ubicacion, descripcion, estado
+            'SELECT id, titulo, descripcion, estado
              FROM incidencias
              WHERE titulo LIKE ?
              ORDER BY id DESC'
@@ -151,10 +151,6 @@ $badgeClass = match($estado) {
                 <?= htmlspecialchars($incidencia['titulo']) ?>
             </p>
 
-            <p>
-                <strong>Ubicación:</strong>
-                <?= htmlspecialchars($incidencia['ubicacion']) ?>
-            </p>
         </div>
 
         <span class="badge <?= $badgeClass ?>">

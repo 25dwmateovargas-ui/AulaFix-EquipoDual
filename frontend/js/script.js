@@ -55,7 +55,6 @@ function initValidacionCrear() {
 
   const reglas = {
     titulo: 3,
-    ubicacion: 3,
     descripcion: 10,
   };
 
