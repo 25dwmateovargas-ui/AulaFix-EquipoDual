@@ -18,7 +18,6 @@
                 <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; display: flex; flex-direction: column; gap: 10px;">
                     <li><a href="crear.php" style="color: #c4c4cc; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#ff5757'" onmouseout="this.style.color='#c4c4cc'">Crear nuevo ticket</a></li>
                     <li><a href="listar.php" style="color: #c4c4cc; text-decoration: none;" onmouseover="this.style.color='#ff5757'" onmouseout="this.style.color='#c4c4cc'">Historial de incidencias</a></li>
-                    <li><a href="faq.php" style="color: #c4c4cc; text-decoration: none;" onmouseover="this.style.color='#ff5757'" onmouseout="this.style.color='#c4c4cc'">Preguntas frecuentes</a></li>
                 </ul>
             </div>
 
@@ -29,7 +28,6 @@
                     <li style="display: flex; align-items: center; gap: 8px;">
                         <span style="color: #00b37e; font-size: 12px;">●</span> Estado: <strong style="color: #ffffff;">Operativo</strong>
                     </li>
-                    <li><a href="documentacion.php" style="color: #c4c4cc; text-decoration: none;" onmouseover="this.style.color='#ff5757'" onmouseout="this.style.color='#c4c4cc'">Manual de usuario</a></li>
                 </ul>
             </div>
 
@@ -41,7 +39,7 @@
                 &copy; <?php echo date('Y'); ?> AulaFix. Todos los derechos reservados.
             </div>
             <div>
-                Desarrollado para EquipoDual | <span style="color: #ff5757;">v1.0.0</span>
+                Desarrollado por Equipo Dual | <span style="color: #ff5757;">v1.0.0</span>
             </div>
         </div>
     </footer>
