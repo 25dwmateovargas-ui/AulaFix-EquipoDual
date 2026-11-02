@@ -13,11 +13,13 @@ $mensaje = '';
 $color = '';
 
 $tituloInvalido = false;
+$ubicacionInvalida = false;
 $descripcionInvalida = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $titulo = trim($_POST['titulo'] ?? '');
+    $ubicacion = trim($_POST['ubicacion'] ?? '');
     $descripcion = trim($_POST['descripcion'] ?? '');
 
     $errores = [];
@@ -27,7 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tituloInvalido = true;
     }
 
-    
+    if (mb_strlen($ubicacion) < 2) {
+        $errores[] = 'la ubicación debe tener al menos 2 caracteres';
+        $ubicacionInvalida = true;
+    }
 
     if (mb_strlen($descripcion) < 10) {
         $errores[] = 'la descripción debe tener al menos 10 caracteres';
@@ -37,11 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errores)) {
 
         $stmt = $conexion->prepare(
-            'INSERT INTO incidencias (titulo, descripcion, estado)
-             VALUES (?, ?, "Abierta")'
+            'INSERT INTO incidencias (titulo, ubicacion, descripcion, estado)
+             VALUES (?, ?, ?, "Abierta")'
         );
-        
-        $stmt->bind_param('ss', $titulo, $descripcion);
+
+        $stmt->bind_param('sss', $titulo, $ubicacion, $descripcion);
 
         if ($stmt->execute()) {
             $mensaje = '¡Incidencia creada con éxito!';
@@ -163,6 +168,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 </div>
 
+                <div class="field <?= $ubicacionInvalida ? 'has-error' : '' ?>">
+
+                    <label for="ubicacion">Ubicación</label>
+
+                    <input
+                        id="ubicacion"
+                        name="ubicacion"
+                        type="text"
+                        placeholder="Ej. Aula 101"
+                        required
+                        minlength="2"
+                        value="<?= htmlspecialchars($_POST['ubicacion'] ?? '') ?>">
+
+                    <div class="field-error">
+                        La ubicación debe tener al menos 2 caracteres.
+                    </div>
+
+                </div>
 
                 <div class="field">
 

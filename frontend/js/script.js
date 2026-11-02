@@ -132,6 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const formCrear = document.getElementById('crear-form');
   if (formCrear) {
-    new ValidadorFormulario(formCrear, { titulo: 3, descripcion: 10 }).init();
+    new ValidadorFormulario(formCrear, { titulo: 3, ubicacion: 2, descripcion: 10 }).init();
   }
 });
