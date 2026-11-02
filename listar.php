@@ -238,7 +238,11 @@ if (isset($_GET['id'])) {
                         <li>
     <a href="listar.php?id=<?php echo $incidencia['id']; ?><?php echo $queryFiltros !== '' ? '&' . $queryFiltros : ''; ?>"
        class="ticket-item
-       <?php echo (isset($_GET['id']) && $_GET['id'] == $incidencia['id']) ? 'active' : ''; ?>">
+       <?php echo (isset($_GET['id']) && $_GET['id'] == $incidencia['id']) ? 'active' : ''; ?>"
+       data-id="<?php echo $incidencia['id']; ?>"
+       data-titulo="<?php echo htmlspecialchars($incidencia['titulo']); ?>"
+       data-ubicacion="<?php echo htmlspecialchars($incidencia['ubicacion']); ?>"
+       data-estado="<?php echo htmlspecialchars($incidencia['estado']); ?>">
 
         <div class="t-id">
             #<?php echo $incidencia['id']; ?>

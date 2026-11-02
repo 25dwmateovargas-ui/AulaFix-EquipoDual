@@ -5,8 +5,16 @@ class FiltroTickets {
   constructor(input, lista) {
     this.input = input;
     this.lista = lista;
-    this.items = Array.from(lista.querySelectorAll('.ticket-item'));
     this.mensajeVacio = lista.querySelector('.empty-list');
+
+    // Array de objetos incidencia, construido a partir de los data-* del DOM.
+    this.incidencias = Array.from(lista.querySelectorAll('.ticket-item')).map((elemento) => ({
+      id: elemento.dataset.id,
+      titulo: elemento.dataset.titulo ?? '',
+      ubicacion: elemento.dataset.ubicacion ?? '',
+      estado: elemento.dataset.estado ?? '',
+      elemento,
+    }));
   }
 
   crearMensajeVacio() {
@@ -17,21 +25,32 @@ class FiltroTickets {
     return li;
   }
 
+  buscarCoincidencias(query) {
+    if (!query) return this.incidencias;
+
+    return this.incidencias.filter((incidencia) =>
+      [incidencia.titulo, incidencia.ubicacion, incidencia.estado]
+        .join(' ')
+        .toLowerCase()
+        .includes(query)
+    );
+  }
+
   filtrar() {
     const query = this.input.value.trim().toLowerCase();
-    let visibles = 0;
+    const coincidencias = this.buscarCoincidencias(query);
+    const idsVisibles = new Set(coincidencias.map((incidencia) => incidencia.id));
 
-    this.items.forEach((item) => {
-      const texto = item.textContent.toLowerCase();
-      const coincide = !query || texto.includes(query);
-      item.closest('li').classList.toggle('hidden', !coincide);
-      if (coincide) visibles++;
+    this.incidencias.forEach((incidencia) => {
+      incidencia.elemento
+        .closest('li')
+        .classList.toggle('hidden', !idsVisibles.has(incidencia.id));
     });
 
     if (!this.mensajeVacio) {
       this.mensajeVacio = this.crearMensajeVacio();
     }
-    this.mensajeVacio.classList.toggle('hidden', visibles !== 0);
+    this.mensajeVacio.classList.toggle('hidden', coincidencias.length !== 0);
   }
 
   limpiar() {
@@ -40,7 +59,7 @@ class FiltroTickets {
   }
 
   init() {
-    if (this.items.length === 0) return;
+    if (this.incidencias.length === 0) return;
 
     this.input.addEventListener('input', () => this.filtrar());
 
