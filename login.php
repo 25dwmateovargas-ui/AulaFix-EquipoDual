@@ -8,6 +8,7 @@ if (isset($_SESSION["usuario"])) {
 }
 
 require_once __DIR__ . "/CONFIG/conexion.php";
+require_once __DIR__ . "/includes/funciones.php";
 
 $error = "";
 
@@ -16,19 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST["nombre"];
     $contraseña = $_POST["contraseña"];
 
-    $stmt = $conexion->prepare(
-        "SELECT *
-         FROM usuarios
-         WHERE nombre = ?
-         AND contraseña = ?"
-    );
-
-    $stmt->bind_param("ss", $nombre, $contraseña);
-    $stmt->execute();
-
-    $resultado = $stmt->get_result();
-
-    if ($resultado->num_rows >= 1) {
+    if (autenticarUsuario($conexion, $nombre, $contraseña)) {
 
         $_SESSION["usuario"] = $nombre;
 
@@ -46,8 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Usuario o contraseña incorrectos";
 
     }
-
-    $stmt->close();
 }
 
 $usuarioRecordado = $_COOKIE["usuario_recordado"] ?? "";

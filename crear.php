@@ -8,6 +8,7 @@ if (!isset($_SESSION["usuario"])) {
 }
 
 require_once __DIR__ . "/CONFIG/conexion.php";
+require_once __DIR__ . "/includes/funciones.php";
 
 $mensaje = '';
 $color = '';
@@ -22,41 +23,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ubicacion = trim($_POST['ubicacion'] ?? '');
     $descripcion = trim($_POST['descripcion'] ?? '');
 
-    $errores = [];
+    $errores = validarIncidencia($titulo, $ubicacion, $descripcion);
 
-    if (mb_strlen($titulo) < 3) {
-        $errores[] = 'el título debe tener al menos 3 caracteres';
-        $tituloInvalido = true;
-    }
-
-    if (mb_strlen($ubicacion) < 2) {
-        $errores[] = 'la ubicación debe tener al menos 2 caracteres';
-        $ubicacionInvalida = true;
-    }
-
-    if (mb_strlen($descripcion) < 10) {
-        $errores[] = 'la descripción debe tener al menos 10 caracteres';
-        $descripcionInvalida = true;
-    }
+    $tituloInvalido = !cumpleLongitudMinima($titulo, 3);
+    $ubicacionInvalida = !cumpleLongitudMinima($ubicacion, 2);
+    $descripcionInvalida = !cumpleLongitudMinima($descripcion, 10);
 
     if (empty($errores)) {
 
-        $stmt = $conexion->prepare(
-            'INSERT INTO incidencias (titulo, ubicacion, descripcion, estado)
-             VALUES (?, ?, ?, "Abierta")'
-        );
-
-        $stmt->bind_param('sss', $titulo, $ubicacion, $descripcion);
-
-        if ($stmt->execute()) {
+        if (crearIncidencia($conexion, $titulo, $ubicacion, $descripcion)) {
             $mensaje = '¡Incidencia creada con éxito!';
             $color = '#22c55e';
         } else {
             $mensaje = 'Error al guardar en la base de datos.';
             $color = '#ef4444';
         }
-
-        $stmt->close();
 
     } else {
         $mensaje = 'Revisa estos campos: ' . ucfirst(implode('; ', $errores)) . '.';
