@@ -16,27 +16,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST["nombre"];
     $contraseña = $_POST["contraseña"];
 
-    $sql = "SELECT *
-            FROM usuarios
-            WHERE nombre = ?
-            AND contraseña = ?";
-
-    $stmt = mysqli_prepare($conexion, $sql);
-
-    mysqli_stmt_bind_param(
-        $stmt,
-        "ss",
-        $nombre,
-        $contraseña
+    $stmt = $conexion->prepare(
+        "SELECT *
+         FROM usuarios
+         WHERE nombre = ?
+         AND contraseña = ?"
     );
 
-    mysqli_stmt_execute($stmt);
+    $stmt->bind_param("ss", $nombre, $contraseña);
+    $stmt->execute();
 
-    $resultado = mysqli_stmt_get_result($stmt);
+    $resultado = $stmt->get_result();
 
-    if (mysqli_num_rows($resultado) >= 1) {
+    if ($resultado->num_rows >= 1) {
 
         $_SESSION["usuario"] = $nombre;
+
+        if (isset($_POST["recordar"])) {
+            setcookie("usuario_recordado", $nombre, time() + (86400 * 30), "/");
+        } else {
+            setcookie("usuario_recordado", "", time() - 3600, "/");
+        }
 
         header("Location: incidencias.php");
         exit();
@@ -47,8 +47,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     }
 
-    mysqli_stmt_close($stmt);
+    $stmt->close();
 }
+
+$usuarioRecordado = $_COOKIE["usuario_recordado"] ?? "";
 
 ?>
 
@@ -118,6 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         name="nombre"
                         type="text"
                         placeholder="Nombre de usuario"
+                        value="<?php echo htmlspecialchars($usuarioRecordado, ENT_QUOTES, 'UTF-8'); ?>"
                         required>
                 </div>
 
@@ -135,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="row-between" style="margin-bottom:22px;">
 
                     <label class="checkbox-label">
-                        <input type="checkbox" name="recordar">
+                        <input type="checkbox" name="recordar" <?php echo $usuarioRecordado !== '' ? 'checked' : ''; ?>>
                         Recordarme
                     </label>
 
