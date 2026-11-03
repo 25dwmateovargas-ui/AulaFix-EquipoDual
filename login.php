@@ -8,6 +8,8 @@ if (isset($_SESSION["usuarios"])) {
     exit();
 }
 
+require_once("CONFIG/conexion.php");
+
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -33,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $resultado = mysqli_stmt_get_result($stmt);
 
-    if (mysqli_num_rows($resultado) === 1) {
+    if (mysqli_num_rows($resultado) >= 1) {
 
         $_SESSION["usuarios"] = $nombre;
 
@@ -75,15 +77,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="card login-card">
 
             <div class="login-head">
+
                 <div class="brand" style="margin-bottom:10px;">
+                    <span class="brand-mark">
+
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"
+                                  stroke="#0b0c10"
+                                  stroke-width="2"
+                                  stroke-linejoin="round"/>
+
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"
+                                  stroke="#0b0c10"
+                                  stroke-width="2"
+                                  stroke-linejoin="round"
+                                  stroke-linecap="round"/>
+                        </svg>
+
+                    </span>
+
                     AulaFix
                 </div>
 
                 <p>Gestión de incidencias del aula</p>
+
             </div>
 
             <?php if (!empty($error)): ?>
-                <p style="color:red;text-align:center;">
+                <p style="color:#ff6b6b; text-align:center; margin-bottom:20px;">
                     <?php echo $error; ?>
                 </p>
             <?php endif; ?>
@@ -112,22 +133,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         required>
                 </div>
 
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                    style="width:100%;">
+                <div class="row-between" style="margin-bottom:22px;">
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="recordar">
+                        Recordarme
+                    </label>
+
+                    <a href="#" class="link-accent">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary"
+                        style="width:100%;">
 
                     Iniciar sesión
+
+                    <svg width="16"
+                         height="16"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         aria-hidden="true">
+
+                        <path d="M5 12h14M13 6l6 6-6 6"
+                              stroke="#0b0c10"
+                              stroke-width="2.2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"/>
+
+                    </svg>
 
                 </button>
 
             </form>
 
+            <p class="demo-hint">
+                Cuenta de demostración · alumno / 1234
+            </p>
+
         </div>
 
     </div>
 </div>
-
+<?php include 'includes/footer.php'; ?>
 <script src="frontend/js/script.js"></script>
 
 </body>

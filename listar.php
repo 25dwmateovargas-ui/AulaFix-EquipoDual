@@ -7,7 +7,7 @@ if (!isset($_SESSION["usuario"])) {
     exit();
 }
 
-require 'CONFIG/conexion.php';
+require __DIR__ . "/CONFIG/conexion.php";
 
 $estadosPermitidos = [
     'Abierta',
@@ -83,12 +83,12 @@ if (!in_array($filtroEstado, $estadosPermitidos)) {
     $filtroEstado = '';
 }
 
-$sql = "SELECT id, titulo, ubicacion, descripcion, estado FROM incidencias WHERE 1=1";
+$sql = "SELECT id, titulo,descripcion, estado FROM incidencias WHERE 1=1";
 $tipos = '';
 $parametros = [];
 
 if ($busqueda !== '') {
-    $sql .= " AND (titulo LIKE ? OR ubicacion LIKE ? OR descripcion LIKE ?)";
+    $sql .= " AND (titulo LIKE ? OR descripcion LIKE ?)";
     $comodin = '%' . $busqueda . '%';
     $tipos .= 'sss';
     $parametros[] = $comodin;
@@ -133,7 +133,7 @@ if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
 
     $stmtDetalle = $conexion->prepare("
-        SELECT id, titulo, ubicacion, descripcion, estado
+        SELECT id, titulo, descripcion, estado
         FROM incidencias
         WHERE id = ?
     ");
@@ -250,7 +250,6 @@ if (isset($_GET['id'])) {
             </div>
 
             <div class="t-loc">
-                📍 <?php echo htmlspecialchars($incidencia['ubicacion']); ?>
             </div>
         </div>
 
@@ -286,7 +285,6 @@ if (isset($_GET['id'])) {
 
             <div class="detail-meta">
                 <span>ID #<?php echo $detalle['id']; ?></span>
-                <span>📍 <?php echo htmlspecialchars($detalle['ubicacion']); ?></span>
             </div>
         </div>
 
@@ -396,7 +394,7 @@ if($detalle['estado'] == 'Resuelta'){
         </div>
 
     </main>
-
+<?php include 'includes/footer.php'; ?>
 </div>
 
 <script src="frontend/js/script.js"></script>

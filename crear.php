@@ -7,17 +7,17 @@ if (!isset($_SESSION["usuario"])) {
     exit();
 }
 
+require __DIR__ . "/CONFIG/conexion.php";
+
 $mensaje = '';
 $color = '';
 
 $tituloInvalido = false;
-$ubicacionInvalida = false;
 $descripcionInvalida = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $titulo = trim($_POST['titulo'] ?? '');
-    $ubicacion = trim($_POST['ubicacion'] ?? '');
     $descripcion = trim($_POST['descripcion'] ?? '');
 
     $errores = [];
@@ -27,10 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tituloInvalido = true;
     }
 
-    if (mb_strlen($ubicacion) < 3) {
-        $errores[] = 'la ubicación debe tener al menos 3 caracteres';
-        $ubicacionInvalida = true;
-    }
+    
 
     if (mb_strlen($descripcion) < 10) {
         $errores[] = 'la descripción debe tener al menos 10 caracteres';
@@ -40,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errores)) {
 
         $stmt = $conexion->prepare(
-            'INSERT INTO incidencias (titulo, ubicacion, descripcion, estado)
-             VALUES (?, ?, ?, "Abierta")'
+            'INSERT INTO incidencias (titulo, descripcion, estado)
+             VALUES (?, ?, "Abierta")'
         );
-
-        $stmt->bind_param('sss', $titulo, $ubicacion, $descripcion);
+        
+        $stmt->bind_param('ss', $titulo, $descripcion);
 
         if ($stmt->execute()) {
             $mensaje = '¡Incidencia creada con éxito!';
@@ -166,24 +163,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 </div>
 
-                <div class="field <?= $ubicacionInvalida ? 'has-error' : '' ?>">
-
-                    <label for="ubicacion">Ubicación</label>
-
-                    <input
-                        id="ubicacion"
-                        name="ubicacion"
-                        type="text"
-                        placeholder="Ej. Aula 2.1"
-                        required
-                        minlength="3"
-                        value="<?= htmlspecialchars($_POST['ubicacion'] ?? '') ?>">
-
-                    <div class="field-error">
-                        Indica una ubicación de al menos 3 caracteres.
-                    </div>
-
-                </div>
 
                 <div class="field">
 
@@ -240,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
 </div>
-
+<?php include 'includes/footer.php'; ?>
 <script src="frontend/js/script.js"></script>
 
 </body>
