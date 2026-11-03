@@ -1,2 +1,86 @@
-# AulaFix-EquipoDual
- Aplicación web para registrar y gestionar incidencias de un aula, biblioteca, taller u otro espacio del centro que elijáis.
+# AulaFix
+
+Aplicación web desarrollada para la gestión de incidencias en aulas e instalaciones del centro educativo.
+
+## Descripción
+
+AulaFix permite registrar, consultar y gestionar incidencias de forma sencilla mediante una interfaz web conectada a una base de datos MySQL.
+
+Los usuarios pueden crear incidencias, consultar el listado, filtrar la información y actualizar el estado de cada incidencia.
+
+## Tecnologías utilizadas
+
+- HTML5
+- CSS3
+- JavaScript
+- PHP
+- MySQL
+- Git y GitHub
+
+## Funcionalidades
+
+- Inicio y cierre de sesión.
+- Creación de incidencias.
+- Listado de incidencias.
+- Búsqueda o filtrado por estado.
+- Cambio de estado de incidencias.
+- Eliminación de incidencias.
+- Validación tanto en cliente (JavaScript) como en servidor (PHP).
+
+## Estados de incidencias
+
+- Pendiente
+- En proceso
+- Resuelta
+
+## Instalación
+
+1. Clonar el repositorio:
+
+bash
+git clone https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual
+
+2. Copiar el proyecto dentro de la carpeta htdocs de XAMPP.
+
+3. Iniciar Apache desde XAMPP.
+
+4. Crear la base de datos ejecutando el script SQL incluido en el proyecto.
+
+5. Configurar la conexión en:
+
+config/conexion.php
+
+6. Acceder desde el navegador: http://localhost/AulaFix-EquipoDual
+
+## Base de datos
+
+AulaFix utiliza una base de datos MySQL denominada `aulafix`, creada para gestionar los usuarios de la aplicación y las incidencias registradas.
+
+La base de datos está compuesta por dos tablas principales:
+
+### Usuarios
+
+La tabla `usuarios` almacena la información necesaria para la autenticación de los usuarios. Cada usuario dispone de un identificador único, un nombre de usuario y una contraseña almacenada de forma segura.
+
+### Incidencias
+
+La tabla `incidencias` contiene toda la información relacionada con las incidencias registradas en el sistema. Para cada incidencia se almacena un identificador único, un título descriptivo, la ubicación donde se ha detectado el problema, una descripción detallada, el estado actual de la incidencia y la fecha de creación.
+
+Por defecto, una incidencia nueva se registra con el estado **"Abierta"**, permitiendo posteriormente su gestión y actualización a través de la aplicación.
+
+La conexión entre la aplicación y la base de datos se realiza mediante PHP y MySQL, permitiendo almacenar, consultar, modificar y eliminar información de manera persistente.
+
+## Cuenta de demostracion
+
+Para poder utilizar la aplicacion y navegar libremente por ella para probar las distintas funcionalidades que han sido desarrolladas, hemos creado un usuario de prueba que puede ser utilizado por cualquier persona. Se debe de importar el script sql de datos_ficticios.sql que se encuentra dentro de la carpeta sql\ para que este login funcione:
+
+usuario: alumno   contraseña: 1234
+
+## Integrantes y reparto de tareas
+
+- Ivan Dobarrio
+
+- Mateo Vargas
+
+- Aritz Pinilla: Desarrollo de backend tanto de login, como de logout e incidencias php. Desarrollo del script conexion.php para la conexion con la base de datos. Unir el frontend de crear e incidencias con el backend. Por ultimo, desarrollo de el README, en el que se explica todo lo relacionado con como funciona el proyecto.
+
