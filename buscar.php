@@ -20,7 +20,7 @@ if ($busqueda !== '') {
         $id = (int) $busqueda;
 
         $stmt = $conexion->prepare(
-            'SELECT id, titulo, descripcion, estado
+            'SELECT id, titulo, ubicacion, descripcion, estado
              FROM incidencias
              WHERE id = ?'
         );
@@ -32,13 +32,13 @@ if ($busqueda !== '') {
         $comodin = '%' . $busqueda . '%';
 
         $stmt = $conexion->prepare(
-            'SELECT id, titulo, descripcion, estado
+            'SELECT id, titulo, ubicacion, descripcion, estado
              FROM incidencias
-             WHERE titulo LIKE ?
+             WHERE titulo LIKE ? OR ubicacion LIKE ?
              ORDER BY id DESC'
         );
 
-        $stmt->bind_param('s', $comodin);
+        $stmt->bind_param('ss', $comodin, $comodin);
     }
 
     $stmt->execute();
@@ -94,7 +94,7 @@ if ($busqueda !== '') {
 
     <div class="search-hero">
         <h1>Buscar un ticket</h1>
-        <p>Introduce el número de ticket o parte del título (ej. 3 o "proyector")</p>
+        <p>Introduce el número de ticket o parte del título o ubicación (ej. 3, "proyector" o "Aula 101")</p>
 
         <form class="search-box" method="GET">
 
@@ -149,6 +149,11 @@ $badgeClass = match($estado) {
             <p>
                 <strong>Título:</strong>
                 <?= htmlspecialchars($incidencia['titulo']) ?>
+            </p>
+
+            <p>
+                <strong>Ubicación:</strong>
+                <?= htmlspecialchars($incidencia['ubicacion']) ?>
             </p>
 
         </div>

@@ -83,12 +83,12 @@ if (!in_array($filtroEstado, $estadosPermitidos)) {
     $filtroEstado = '';
 }
 
-$sql = "SELECT id, titulo,descripcion, estado FROM incidencias WHERE 1=1";
+$sql = "SELECT id, titulo, ubicacion, descripcion, estado FROM incidencias WHERE 1=1";
 $tipos = '';
 $parametros = [];
 
 if ($busqueda !== '') {
-    $sql .= " AND (titulo LIKE ? OR descripcion LIKE ?)";
+    $sql .= " AND (titulo LIKE ? OR ubicacion LIKE ? OR descripcion LIKE ?)";
     $comodin = '%' . $busqueda . '%';
     $tipos .= 'sss';
     $parametros[] = $comodin;
@@ -133,7 +133,7 @@ if (isset($_GET['id'])) {
     $id = (int) $_GET['id'];
 
     $stmtDetalle = $conexion->prepare("
-        SELECT id, titulo, descripcion, estado
+        SELECT id, titulo, ubicacion, descripcion, estado
         FROM incidencias
         WHERE id = ?
     ");
@@ -238,7 +238,11 @@ if (isset($_GET['id'])) {
                         <li>
     <a href="listar.php?id=<?php echo $incidencia['id']; ?><?php echo $queryFiltros !== '' ? '&' . $queryFiltros : ''; ?>"
        class="ticket-item
-       <?php echo (isset($_GET['id']) && $_GET['id'] == $incidencia['id']) ? 'active' : ''; ?>">
+       <?php echo (isset($_GET['id']) && $_GET['id'] == $incidencia['id']) ? 'active' : ''; ?>"
+       data-id="<?php echo $incidencia['id']; ?>"
+       data-titulo="<?php echo htmlspecialchars($incidencia['titulo']); ?>"
+       data-ubicacion="<?php echo htmlspecialchars($incidencia['ubicacion']); ?>"
+       data-estado="<?php echo htmlspecialchars($incidencia['estado']); ?>">
 
         <div class="t-id">
             #<?php echo $incidencia['id']; ?>
@@ -250,6 +254,7 @@ if (isset($_GET['id'])) {
             </div>
 
             <div class="t-loc">
+                <?php echo htmlspecialchars($incidencia['ubicacion']); ?>
             </div>
         </div>
 
@@ -285,6 +290,7 @@ if (isset($_GET['id'])) {
 
             <div class="detail-meta">
                 <span>ID #<?php echo $detalle['id']; ?></span>
+                <span><?php echo htmlspecialchars($detalle['ubicacion']); ?></span>
             </div>
         </div>
 

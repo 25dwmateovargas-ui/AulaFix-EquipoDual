@@ -7,6 +7,26 @@ if (!isset($_SESSION["usuario"])) {
     exit();
 }
 
+require_once __DIR__ . "/CONFIG/conexion.php";
+
+$contadores = [
+    'Abierta' => 0,
+    'En proceso' => 0,
+    'Resuelta' => 0,
+];
+
+$resultadoConteo = $conexion->query(
+    "SELECT estado, COUNT(*) AS total
+     FROM incidencias
+     GROUP BY estado"
+);
+
+while ($fila = $resultadoConteo->fetch_assoc()) {
+    if (isset($contadores[$fila['estado']])) {
+        $contadores[$fila['estado']] = (int) $fila['total'];
+    }
+}
+
 ?>
 
 <!doctype html>
@@ -151,17 +171,17 @@ if (!isset($_SESSION["usuario"])) {
         <div class="stats-row">
 
             <div class="stat-pill">
-                <div class="n" style="color:var(--danger)">2</div>
+                <div class="n" style="color:var(--danger)"><?php echo $contadores['Abierta']; ?></div>
                 <div class="l">Abiertas</div>
             </div>
 
             <div class="stat-pill">
-                <div class="n" style="color:var(--warning)">2</div>
+                <div class="n" style="color:var(--warning)"><?php echo $contadores['En proceso']; ?></div>
                 <div class="l">En progreso</div>
             </div>
 
             <div class="stat-pill">
-                <div class="n" style="color:var(--success)">2</div>
+                <div class="n" style="color:var(--success)"><?php echo $contadores['Resuelta']; ?></div>
                 <div class="l">Cerradas</div>
             </div>
 
