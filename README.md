@@ -78,7 +78,8 @@ usuario: alumno   contraseña: 1234
 
 ## Integrantes y reparto de tareas
 
-- Ivan Dobarrio
+- Ivan Dobarrio: Desarrollo inicial en Figma de los prototipos de las diferentes partes de la aplicación; desarrollo del frontend; integración de htmls previos en archivos .php, implementación en rama de cambios para implementar lo visto en clase 
+en el proyecto.
 
 - Mateo Vargas
 
