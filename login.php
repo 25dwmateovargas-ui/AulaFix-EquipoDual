@@ -1,42 +1,57 @@
 <?php
 
+// Inicia la sesión para poder acceder a las variables de sesión
 session_start();
 
+// Si el usuario ya ha iniciado sesión, se le redirige directamente
+// a la página principal de incidencias
 if (isset($_SESSION["usuario"])) {
     header("Location: incidencias.php");
     exit();
 }
 
+// Carga la conexión a la base de datos y las funciones auxiliares
 require_once __DIR__ . "/CONFIG/conexion.php";
 require_once __DIR__ . "/includes/funciones.php";
 
 $error = "";
 
+// Comprueba si el formulario ha sido enviado mediante POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    // Obtiene los datos introducidos por el usuario
     $nombre = $_POST["nombre"];
     $contraseña = $_POST["contraseña"];
 
+    // Verifica las credenciales utilizando la función de autenticación
     if (autenticarUsuario($conexion, $nombre, $contraseña)) {
 
+        // Guarda el nombre del usuario en la sesión
         $_SESSION["usuario"] = $nombre;
 
+        // Si se marca la opción "Recordarme", se crea una cookie
+        // durante 30 días para recordar el nombre de usuario
         if (isset($_POST["recordar"])) {
             setcookie("usuario_recordado", $nombre, time() + (86400 * 30), "/");
         } else {
+            // Si no se marca, se elimina la cookie existente
             setcookie("usuario_recordado", "", time() - 3600, "/");
         }
 
+        // Redirige al usuario a la página principal
         header("Location: incidencias.php");
         exit();
 
     } else {
 
+        // Muestra un mensaje de error si las credenciales son incorrectas
         $error = "Usuario o contraseña incorrectos";
 
     }
 }
 
+// Recupera el valor de la cookie para rellenar automáticamente
+// el nombre de usuario si anteriormente se seleccionó "Recordarme"
 $usuarioRecordado = $_COOKIE["usuario_recordado"] ?? "";
 
 ?>
@@ -167,7 +182,9 @@ $usuarioRecordado = $_COOKIE["usuario_recordado"] ?? "";
 
     </div>
 </div>
+
 <?php include 'includes/footer.php'; ?>
+
 <script src="frontend/js/script.js"></script>
 
 </body>
