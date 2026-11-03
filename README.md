@@ -81,7 +81,7 @@ usuario: alumno   contraseña: 1234
 - Ivan Dobarrio: Desarrollo inicial en Figma de los prototipos de las diferentes partes de la aplicación; desarrollo del frontend; integración de htmls previos en archivos .php, implementación en rama de cambios para implementar lo visto en clase 
 en el proyecto.
 
-- Mateo Vargas
+- Mateo Vargas: Desarrollo de backend en listar.php, crear.php, buscar.php y crear la base de datos inicial en MySql workbench, Importar el header y footer a todas las páginas y que los enlaces de abajo tengan las rutas bien hechas para evitar errores. 
 
 - Aritz Pinilla: Desarrollo de backend tanto de login, como de logout e incidencias php. Desarrollo del script conexion.php para la conexion con la base de datos. Unir el frontend de crear e incidencias con el backend. Por ultimo, desarrollo de el README, en el que se explica todo lo relacionado con como funciona el proyecto.
 
