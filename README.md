@@ -129,15 +129,15 @@ Recorrido y casos probados antes de la entrega. Marcar el resultado real tras pr
 
 | Prueba | Qué se esperaba | Qué ocurrió |
 |---|---|---|
-| Acceder a `listar.php` / `crear.php` / `buscar.php` sin haber iniciado sesión | Redirige a `login.php` | _(pendiente de probar)_ |
-| Login con usuario o contraseña incorrectos | Muestra "Usuario o contraseña incorrectos" y no entra | _(pendiente de probar)_ |
-| Login correcto con "Recordarme" marcado, cerrar sesión y volver a `login.php` | El campo usuario aparece relleno y la casilla marcada | _(pendiente de probar)_ |
-| Crear ticket con título de menos de 3 caracteres (con JavaScript activo) | El navegador bloquea el envío y muestra el aviso de validación | _(pendiente de probar)_ |
-| Crear ticket inválido con JavaScript desactivado | PHP debe rechazarlo igualmente y mostrar el mensaje de error | _(pendiente de probar)_ |
-| Crear ticket válido (título, ubicación y descripción correctos) | Se guarda en MySQL y aparece en `listar.php` | _(pendiente de probar)_ |
-| Buscar un texto que no coincide con ninguna incidencia | Mensaje "No hay incidencias que coincidan con la búsqueda" | _(pendiente de probar)_ |
-| Cambiar el estado de una incidencia y recargar la página | El nuevo estado se mantiene (persistencia en MySQL) | _(pendiente de probar)_ |
-| Eliminar una incidencia | Pide confirmación antes de borrar y desaparece del listado | _(pendiente de probar)_ |
-| Cambiar la densidad del listado (cookie) y recargar o volver más tarde | La preferencia se mantiene entre visitas | _(pendiente de probar)_ |
-| Instalar el proyecto desde cero siguiendo este README | Queda funcionando sin pasos adicionales | _(pendiente de probar)_ |
+| Acceder a `listar.php` / `crear.php` / `buscar.php` sin haber iniciado sesión | Redirige a `login.php` | ✅ Correcto: redirige a `login.php` |
+| Login con usuario o contraseña incorrectos | Muestra "Usuario o contraseña incorrectos" y no entra | ✅ Correcto |
+| Login correcto con "Recordarme" marcado, cerrar sesión y volver a `login.php` | El campo usuario aparece relleno y la casilla marcada | ✅ Correcto |
+| Crear ticket con título de menos de 3 caracteres (con JavaScript activo) | El navegador bloquea el envío y muestra el aviso de validación | ✅ Correcto: aparece el globo nativo "Este campo necesita al menos 3 caracteres." |
+| Crear ticket inválido saltándose la validación JS (petición `fetch` directa a `crear.php`) | PHP debe rechazarlo igualmente y mostrar el mensaje de error | ✅ Correcto: devuelve "Revisa estos campos: el título debe tener al menos 3 caracteres; la ubicación debe tener al menos 2 caracteres; la descripción debe tener al menos 10 caracteres." |
+| Crear ticket válido (título, ubicación y descripción correctos) | Se guarda en MySQL y aparece en `listar.php` | ✅ Correcto: apareció como ticket nuevo en el listado (se eliminó después, era de prueba) |
+| Buscar un texto que no coincide con ninguna incidencia | Mensaje "No hay incidencias que coincidan con la búsqueda" | ✅ Correcto |
+| Cambiar el estado de una incidencia y recargar la página | El nuevo estado se mantiene (persistencia en MySQL) | ✅ Correcto: comprobado también directamente en la tabla de phpMyAdmin |
+| Eliminar una incidencia | Pide confirmación antes de borrar y desaparece del listado | ✅ Correcto: sin aceptar el diálogo de confirmación, el ticket no se borra |
+| Cambiar la densidad del listado (cookie) y recargar o volver más tarde | La preferencia se mantiene entre visitas | ✅ Correcto: se mantuvo "Compacta" al navegar a otra página y volver sin el parámetro en la URL |
+| Instalar el proyecto desde cero siguiendo este README | Queda funcionando sin pasos adicionales | ⚠️ Con un matiz: detectamos que `conexion.example.php` traía `contraseña = ""` pero una copia local antigua tenía `"root"`, lo que daba "Error de conexión a la base de datos." Revisad que vuestro MySQL/MariaDB raíz coincide con la contraseña configurada |
 
