@@ -82,7 +82,38 @@ usuario: alumno   contraseña: 1234
 
 - Ivan Dobarrio: Desarrollo inicial en Figma de los prototipos de las diferentes partes de la aplicación; desarrollo del frontend; integración de htmls previos en archivos .php, implementación en rama de cambios para implementar lo visto en clase 
 en el proyecto.
-  - Commits/PRs: _(pegar aquí los enlaces de GitHub a tus commits o PRs principales)_
+  - Commits/PRs: [historial completo de commits](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commits/main?author=ivandobarriocordon)
+    - Rama `backend` (estructura inicial del proyecto):
+      [Creación de carpetas del proyecto y archivos iniciales](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/274920e),
+      [Creación de carpeta includes y archivos header y footer de PHP](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/11c23dc)
+    - Rama `frontend` (diseño de las pantallas):
+      [Diseño de frontend (login, lobby, listar, crear, buscar)](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/b8c8e99),
+      [Juntar .htmls con archivos .php con la lógica del backend](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/531c5af)
+    - Integración de `frontend` y `backend` en `main`/`new_develop` (resolución de conflictos):
+      [Resolver conflicto login.html](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/63ffb52),
+      [Resolver conflictos en login.php e incidencias.php](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/bac5863),
+      [Resolver conflictos de merge](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/566eb48)
+    - Requisitos R01-R07 en `main`/`new_develop` (acceso, campos, búsqueda, interfaz, cookie, validación):
+      [R01: proteger crear.php, listar.php y buscar.php con sesión](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/4d6e04a),
+      [R02: añadir campo ubicación a las incidencias](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/648df96),
+      [R03: búsqueda y filtro reales en el listado](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/ccb1fb1),
+      [R04: mejora de interfaz con JavaScript](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/d53cd0d),
+      [R06: preferencia de densidad del listado en cookie](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/c83cab0),
+      [R07: validación coherente en JS y PHP](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/0564dc8),
+      [Arreglos de integraciones](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/9866b33),
+      [Corrección listar.php](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/52c3b06)
+    - Rama `cambios` (adaptación a la teoría vista en clase: POO, MySQLi, cookies, sesiones y eventos JS — *desarrollados con apoyo de IA*):
+      [Unificar conexión MySQLi a estilo OOP y cookie "recordar usuario"](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/7ec8861),
+      [Reescribir script.js con clases ES6 y validación nativa](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/54db509),
+      [Calcular los contadores del lobby desde la base de datos](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/db5011d),
+      [Añadir campo ubicación y scripts SQL de instalación](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/76c1052),
+      [Extraer funciones PHP reutilizables](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/5ff2aa7),
+      [FiltroTickets trabaja sobre un array de objetos](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/cc1e281),
+      [README actualizado](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/d335434)
+    - Directamente en `main`, tras fusionar `cambios` (también con apoyo de IA):
+      [Añadir .gitignore y corregir estado inconsistente en el README](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/b1be391),
+      [Avisar sobre conexion.php tras excluirlo del repositorio](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/255c78d),
+      [Preparar plantillas de evidencias en el README](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/683f625)
 
 - Mateo Vargas: Desarrollo de backend en listar.php, crear.php, buscar.php y crear la base de datos inicial en MySql workbench, Importar el header y footer a todas las páginas y que los enlaces de abajo tengan las rutas bien hechas para evitar errores. 
   - Commits/PRs: _(pegar aquí los enlaces de GitHub a tus commits o PRs principales)_
