@@ -35,6 +35,8 @@ Los usuarios pueden crear incidencias, consultar el listado, filtrar la informac
 
 ## Instalación
 
+> **Importante:** si ya tenías el proyecto clonado de antes, al hacer `git pull` `CONFIG/conexion.php` dejará de estar en el repositorio (ahora está en `.gitignore`). Tu copia local no se borra sola, pero si clonas el proyecto desde cero no vendrá incluida: sigue el paso 5 para crearla a partir de `conexion.example.php`, si no la aplicación no podrá conectar con la base de datos.
+
 1. Clonar el repositorio:
 
 bash
