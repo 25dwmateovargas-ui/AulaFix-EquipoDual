@@ -116,10 +116,41 @@ en el proyecto.
       [Preparar plantillas de evidencias en el README](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/683f625)
 
 - Mateo Vargas: Desarrollo de backend en listar.php, crear.php, buscar.php y crear la base de datos inicial en MySql workbench, Importar el header y footer a todas las páginas y que los enlaces de abajo tengan las rutas bien hechas para evitar errores. 
-  - Commits/PRs: _(pegar aquí los enlaces de GitHub a tus commits o PRs principales)_
+  - Commits/PRs: [historial completo de commits](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commits/main?author=25dwmateovargas-ui)
+    - Arranque del proyecto:
+      [Initial commit](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/78ba862)
+    - `crear.php`:
+      [Creación de crear.php](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/f570881),
+      [Fix crear.php y añadir buscar.php](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/8379add),
+      [Fix error crear.php, modificar listar.php](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/163e24e)
+    - `buscar.php`:
+      [Añadir buscar.php](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/fd84bbc),
+      [Juntar Buscar ticket.html con Buscar.php](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/c2ef6bf)
+    - `listar.php` e interacción con la lista:
+      [Añadir mostrar incidencia por id](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/0b0ab3f),
+      [Añadir interacción a incidencias](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/ad185d4),
+      [Añadir interacción con lista](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/b9898d2),
+      [Añadir eliminar incidencia y modificar estado](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/fbcda78),
+      [Fix <<<Head en listar.php](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/b545b83),
+      [Solucionar problema en buscar (texto en blanco)](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/349e37d)
+    - Header y footer comunes:
+      [Añadir header y footer](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/b4479bd)
+    - README:
+      [README actualizado](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/d9bc198)
 
 - Aritz Pinilla: Desarrollo de backend tanto de login, como de logout e incidencias php. Desarrollo del script conexion.php para la conexion con la base de datos. Unir el frontend de crear e incidencias con el backend. Por ultimo, desarrollo de el README, en el que se explica todo lo relacionado con como funciona el proyecto.
-  - Commits/PRs: _(pegar aquí los enlaces de GitHub a tus commits o PRs principales)_
+  - Commits/PRs: [historial completo de commits](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commits/main?author=24dm.aritz.pinilla)
+    - Login y conexión con la base de datos:
+      [Incluir el login](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/f230308),
+      [Implementar la lógica de login y conexión con base de datos](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/2a3417b)
+    - Logout e incidencias:
+      [Desarrollo del logout](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/07506cc),
+      [Desarrollo pantalla principal incidencias](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/f353e92),
+      [Implementación de crear y listar con frontend](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/82de92c),
+      [Corrección en listar](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/1975ce1)
+    - README:
+      [Elaboración del README](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/f5d7fa3),
+      [Introducir comentarios varios](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/d0ac17f)
 
 > Para cada persona, añade el enlace a sus commits (pestaña **Commits** del repo, filtrando por autor) o a las Pull Requests que abrió/revisó. Sirve como evidencia de aportación y de revisión del trabajo de otros compañeros.
 
