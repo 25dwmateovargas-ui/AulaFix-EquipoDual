@@ -4,7 +4,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 $host = "localhost";
 $usuario = "root";
-$contrasena = "root";
+$contrasena = "";
 $baseDatos = "aulafix";
 
 try {

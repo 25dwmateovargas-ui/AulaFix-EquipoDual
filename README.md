@@ -29,7 +29,7 @@ Los usuarios pueden crear incidencias, consultar el listado, filtrar la informac
 
 ## Estados de incidencias
 
-- Pendiente
+- Abierta
 - En proceso
 - Resuelta
 
@@ -46,9 +46,9 @@ git clone https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual
 
 4. Crear la base de datos ejecutando el script SQL incluido en el proyecto.
 
-5. Configurar la conexión en:
+5. Copiar `CONFIG/conexion.example.php` como `CONFIG/conexion.php` y ajustar ahí tus credenciales locales de MySQL (este archivo no se sube al repositorio, está en `.gitignore`):
 
-config/conexion.php
+CONFIG/conexion.php
 
 6. Acceder desde el navegador: http://localhost/AulaFix-EquipoDual
 

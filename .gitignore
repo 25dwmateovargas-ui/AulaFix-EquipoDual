@@ -1,0 +1,8 @@
+# Configuracion local con credenciales reales (usar CONFIG/conexion.example.php como plantilla)
+CONFIG/conexion.php
+
+# Archivos de sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
