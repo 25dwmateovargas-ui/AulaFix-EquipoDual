@@ -156,8 +156,6 @@ en el proyecto.
       [Elaboración del README](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/f5d7fa3),
       [Introducir comentarios varios](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/d0ac17f)
 
-> Para cada persona, añade el enlace a sus commits (pestaña **Commits** del repo, filtrando por autor) o a las Pull Requests que abrió/revisó. Sirve como evidencia de aportación y de revisión del trabajo de otros compañeros.
-
 ## Evidencias de pruebas
 
 Recorrido y casos probados antes de la entrega. Marcar el resultado real tras probarlo en vuestro XAMPP.
