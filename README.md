@@ -82,8 +82,31 @@ usuario: alumno   contraseña: 1234
 
 - Ivan Dobarrio: Desarrollo inicial en Figma de los prototipos de las diferentes partes de la aplicación; desarrollo del frontend; integración de htmls previos en archivos .php, implementación en rama de cambios para implementar lo visto en clase 
 en el proyecto.
+  - Commits/PRs: _(pegar aquí los enlaces de GitHub a tus commits o PRs principales)_
 
 - Mateo Vargas: Desarrollo de backend en listar.php, crear.php, buscar.php y crear la base de datos inicial en MySql workbench, Importar el header y footer a todas las páginas y que los enlaces de abajo tengan las rutas bien hechas para evitar errores. 
+  - Commits/PRs: _(pegar aquí los enlaces de GitHub a tus commits o PRs principales)_
 
 - Aritz Pinilla: Desarrollo de backend tanto de login, como de logout e incidencias php. Desarrollo del script conexion.php para la conexion con la base de datos. Unir el frontend de crear e incidencias con el backend. Por ultimo, desarrollo de el README, en el que se explica todo lo relacionado con como funciona el proyecto.
+  - Commits/PRs: _(pegar aquí los enlaces de GitHub a tus commits o PRs principales)_
+
+> Para cada persona, añade el enlace a sus commits (pestaña **Commits** del repo, filtrando por autor) o a las Pull Requests que abrió/revisó. Sirve como evidencia de aportación y de revisión del trabajo de otros compañeros.
+
+## Evidencias de pruebas
+
+Recorrido y casos probados antes de la entrega. Marcar el resultado real tras probarlo en vuestro XAMPP.
+
+| Prueba | Qué se esperaba | Qué ocurrió |
+|---|---|---|
+| Acceder a `listar.php` / `crear.php` / `buscar.php` sin haber iniciado sesión | Redirige a `login.php` | _(pendiente de probar)_ |
+| Login con usuario o contraseña incorrectos | Muestra "Usuario o contraseña incorrectos" y no entra | _(pendiente de probar)_ |
+| Login correcto con "Recordarme" marcado, cerrar sesión y volver a `login.php` | El campo usuario aparece relleno y la casilla marcada | _(pendiente de probar)_ |
+| Crear ticket con título de menos de 3 caracteres (con JavaScript activo) | El navegador bloquea el envío y muestra el aviso de validación | _(pendiente de probar)_ |
+| Crear ticket inválido con JavaScript desactivado | PHP debe rechazarlo igualmente y mostrar el mensaje de error | _(pendiente de probar)_ |
+| Crear ticket válido (título, ubicación y descripción correctos) | Se guarda en MySQL y aparece en `listar.php` | _(pendiente de probar)_ |
+| Buscar un texto que no coincide con ninguna incidencia | Mensaje "No hay incidencias que coincidan con la búsqueda" | _(pendiente de probar)_ |
+| Cambiar el estado de una incidencia y recargar la página | El nuevo estado se mantiene (persistencia en MySQL) | _(pendiente de probar)_ |
+| Eliminar una incidencia | Pide confirmación antes de borrar y desaparece del listado | _(pendiente de probar)_ |
+| Cambiar la densidad del listado (cookie) y recargar o volver más tarde | La preferencia se mantiene entre visitas | _(pendiente de probar)_ |
+| Instalar el proyecto desde cero siguiendo este README | Queda funcionando sin pasos adicionales | _(pendiente de probar)_ |
 
