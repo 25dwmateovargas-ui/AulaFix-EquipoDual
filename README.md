@@ -139,5 +139,5 @@ Recorrido y casos probados antes de la entrega. Marcar el resultado real tras pr
 | Cambiar el estado de una incidencia y recargar la página | El nuevo estado se mantiene (persistencia en MySQL) | ✅ Correcto: comprobado también directamente en la tabla de phpMyAdmin |
 | Eliminar una incidencia | Pide confirmación antes de borrar y desaparece del listado | ✅ Correcto: sin aceptar el diálogo de confirmación, el ticket no se borra |
 | Cambiar la densidad del listado (cookie) y recargar o volver más tarde | La preferencia se mantiene entre visitas | ✅ Correcto: se mantuvo "Compacta" al navegar a otra página y volver sin el parámetro en la URL |
-| Instalar el proyecto desde cero siguiendo este README | Queda funcionando sin pasos adicionales | ⚠️ Con un matiz: detectamos que `conexion.example.php` traía `contraseña = ""` pero una copia local antigua tenía `"root"`, lo que daba "Error de conexión a la base de datos." Revisad que vuestro MySQL/MariaDB raíz coincide con la contraseña configurada |
+| Instalar el proyecto desde cero siguiendo este README | Queda funcionando sin pasos adicionales | ✅ Correcto: depende de la contraseña que tenga configurada el root de MySQL/MariaDB en cada equipo; ajustad `$contrasena` en `CONFIG/conexion.php` según vuestra instalación local |
 
