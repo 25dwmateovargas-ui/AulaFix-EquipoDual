@@ -113,7 +113,11 @@ en el proyecto.
     - Directamente en `main`, tras fusionar `cambios` (también con apoyo de IA):
       [Añadir .gitignore y corregir estado inconsistente en el README](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/b1be391),
       [Avisar sobre conexion.php tras excluirlo del repositorio](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/255c78d),
-      [Preparar plantillas de evidencias en el README](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/683f625)
+      [Preparar plantillas de evidencias en el README](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/683f625),
+      [Rellenar enlaces a commits de Ivan Dobarrio en el README](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/03ed9cf),
+      [Rellenar la tabla de Evidencias de pruebas con resultados reales](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/a6cc4c6),
+      [Aclarar la nota de instalación en la tabla de evidencias](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/8cb4690),
+      [Rellenar enlaces a commits de Mateo Vargas y Aritz Pinilla en el README](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commit/4d93100)
 
 - Mateo Vargas: Desarrollo de backend en listar.php, crear.php, buscar.php y crear la base de datos inicial en MySql workbench, Importar el header y footer a todas las páginas y que los enlaces de abajo tengan las rutas bien hechas para evitar errores. 
   - Commits/PRs: [historial completo de commits](https://github.com/25dwmateovargas-ui/AulaFix-EquipoDual/commits/main?author=25dwmateovargas-ui)
